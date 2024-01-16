@@ -2,7 +2,6 @@
 #include <iostream>
 
 using namespace std;
-
 WareHouse *backup = nullptr;
 
 int main(int argc, char **argv)
