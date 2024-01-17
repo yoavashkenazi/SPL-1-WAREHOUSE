@@ -53,6 +53,7 @@ void WareHouse::start()
 
 const vector<BaseAction *> &WareHouse::getActionsLog() const
 {
+    return this->actionsLog;
 }
 void WareHouse::addOrder(Order *order)
 {
@@ -65,12 +66,47 @@ void WareHouse::printActionsLogs()
 }
 Customer &WareHouse::getCustomer(int customerId) const
 {
+    for (Customer *c : this->customers)
+    {
+        if (c->getId() == customerId)
+        {
+            return (*c);
+        }
+    }
 }
 Volunteer &WareHouse::getVolunteer(int volunteerId) const
 {
+    for (Volunteer *v : this->volunteers)
+    {
+        if (v->getId() == volunteerId)
+        {
+            return (*v);
+        }
+    }
 }
 Order &WareHouse ::getOrder(int orderId) const
 {
+    for (Order *o : this->pendingOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
+    for (Order *o : this->inProcessOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
+    for (Order *o : this->completedOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
 }
 
 void WareHouse::close()
