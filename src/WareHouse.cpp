@@ -44,3 +44,41 @@ WareHouse::WareHouse(const string &configFilePath)
     // Close the file
     inputFile.close();
 }
+
+void WareHouse::start()
+{
+    std::cerr << "Warehouse is open!" << std::endl;
+    this->open();
+}
+
+const vector<BaseAction *> &WareHouse::getActionsLog() const
+{
+}
+void WareHouse::addOrder(Order *order)
+{
+}
+void WareHouse::addAction(BaseAction *action)
+{
+}
+void WareHouse::printActionsLogs()
+{
+}
+Customer &WareHouse::getCustomer(int customerId) const
+{
+}
+Volunteer &WareHouse::getVolunteer(int volunteerId) const
+{
+}
+Order &WareHouse ::getOrder(int orderId) const
+{
+}
+
+void WareHouse::close()
+{
+    this->isOpen = false;
+}
+
+void WareHouse::open()
+{
+    this->isOpen = true;
+}
