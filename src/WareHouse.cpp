@@ -1,4 +1,4 @@
-#include "WareHouse.h"
+#include "../include/WareHouse.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,8 +7,6 @@ WareHouse::WareHouse(const string &configFilePath)
 {
     // Open the text file
     std::ifstream inputFile(configFilePath);
-
-    start();
 
     // Check if the file is open
     if (!inputFile.is_open())
