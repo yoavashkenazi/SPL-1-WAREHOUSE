@@ -15,9 +15,9 @@ void InputToAction(string input){
         iss >> numOfSteps;
         SimulateStep action(numOfSteps);
     } else if (firstWord == "order"){
-        int costumerId;
-        iss >> costumerId;
-        AddOrder action(costumerId);
+        int customerId;
+        iss >> customerId;
+        AddOrder action(customerId);
     } else if (firstWord == "customer"){
         string name, cType;
         int distance, maxOrders;
@@ -28,9 +28,9 @@ void InputToAction(string input){
         iss >> id;
         PrintOrderStatus action(id);
     } else if (firstWord == "customerStatus"){
-        int costumerId;
-        iss >> costumerId;
-        PrintCustomerStatus action(costumerId);
+        int customerId;
+        iss >> customerId;
+        PrintCustomerStatus action(customerId);
     } else if (firstWord == "volunteerStatus"){
         int volunteerId;
         iss >> volunteerId;
@@ -54,7 +54,7 @@ void StringToCreate (string input){
     std::istringstream iss(input);
     std::string firstWord;
     iss >> firstWord;
-    if (firstWord == "costumer"){ //creating a costumer
+    if (firstWord == "customer"){ //creating a customer
         string name, cType;
         int distance, maxOrders;
         iss >> name >> cType >> distance >> maxOrders;
