@@ -3,7 +3,90 @@
 #include <fstream>
 #include <string>
 
-WareHouse::WareHouse(const string &configFilePath)
+WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0)
+{
+    this->configFileProccessing(configFilePath)
+}
+
+void WareHouse::start()
+{
+    std::cerr << "Warehouse is open!" << std::endl;
+    this->open();
+}
+
+const vector<BaseAction *> &WareHouse::getActionsLog() const
+{
+    return this->actionsLog;
+}
+void WareHouse::addOrder(Order *order)
+{
+}
+void WareHouse::addAction(BaseAction *action)
+{
+}
+void WareHouse::printActionsLogs()
+{
+}
+Customer &WareHouse::getCustomer(int customerId) const
+{
+    for (Customer *c : this->customers)
+    {
+        if (c->getId() == customerId)
+        {
+            return (*c);
+        }
+    }
+}
+Volunteer &WareHouse::getVolunteer(int volunteerId) const
+{
+    for (Volunteer *v : this->volunteers)
+    {
+        if (v->getId() == volunteerId)
+        {
+            return (*v);
+        }
+    }
+}
+Order &WareHouse ::getOrder(int orderId) const
+{
+    for (Order *o : this->pendingOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
+    for (Order *o : this->inProcessOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
+    for (Order *o : this->completedOrders)
+    {
+        if (o->getId() == orderId)
+        {
+            return (*o);
+        }
+    }
+}
+
+void WareHouse::close()
+{
+    this->isOpen = false;
+}
+
+void WareHouse::open()
+{
+    this->isOpen = true;
+}
+
+void WareHouse::AddCustomer(Customer *customer)
+{
+}
+
+void WareHouse::configFileProccessing(const string &configFilePath)
 {
     // Open the text file
     std::ifstream inputFile(configFilePath);
@@ -43,42 +126,4 @@ WareHouse::WareHouse(const string &configFilePath)
 
     // Close the file
     inputFile.close();
-}
-
-void WareHouse::start()
-{
-    std::cerr << "Warehouse is open!" << std::endl;
-    this->open();
-}
-
-const vector<BaseAction *> &WareHouse::getActionsLog() const
-{
-}
-void WareHouse::addOrder(Order *order)
-{
-}
-void WareHouse::addAction(BaseAction *action)
-{
-}
-void WareHouse::printActionsLogs()
-{
-}
-Customer &WareHouse::getCustomer(int customerId) const
-{
-}
-Volunteer &WareHouse::getVolunteer(int volunteerId) const
-{
-}
-Order &WareHouse ::getOrder(int orderId) const
-{
-}
-
-void WareHouse::close()
-{
-    this->isOpen = false;
-}
-
-void WareHouse::open()
-{
-    this->isOpen = true;
 }

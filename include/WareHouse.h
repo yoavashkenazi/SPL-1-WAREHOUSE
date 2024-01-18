@@ -26,6 +26,7 @@ public:
     Order &getOrder(int orderId) const;
     void close();
     void open();
+    void AddCustomer(Customer *customer);
 
 private:
     bool isOpen;
@@ -37,4 +38,5 @@ private:
     vector<Customer *> customers;
     int customerCounter;  // For assigning unique customer IDs
     int volunteerCounter; // For assigning unique volunteer IDs
+    void configFileProccessing(const string &configFilePath);
 };
