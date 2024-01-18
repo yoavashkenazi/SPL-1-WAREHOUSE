@@ -1,6 +1,6 @@
 #include "../include/Volunteer.h"
 
-Volunteer ::Volunteer(int id, const string &name) : id(id), name(name)
+Volunteer ::Volunteer(int id, const string &name) : completedOrderId(NO_ORDER), activeOrderId(NO_ORDER), id(id), name(name)
 {
 }
 int Volunteer ::getId() const
@@ -19,13 +19,18 @@ int Volunteer ::getCompletedOrderId() const
 {
     return this->completedOrderId;
 }
-bool Volunteer ::isBusy() const {
-    return activeOrderId}
+bool Volunteer ::isBusy() const
+{
+    return (activeOrderId != NO_ORDER);
+}
 
 CollectorVolunteer ::CollectorVolunteer(int id, string name, int coolDown) : Volunteer(id, name), coolDown(coolDown), timeLeft(coolDown)
 {
 }
-CollectorVolunteer *CollectorVolunteer ::clone() const {}
+CollectorVolunteer *CollectorVolunteer ::clone() const
+{
+    return new CollectorVolunteer(getId(), getName(), getCoolDown());
+}
 void CollectorVolunteer ::step() {}
 int CollectorVolunteer ::getCoolDown() const
 {
