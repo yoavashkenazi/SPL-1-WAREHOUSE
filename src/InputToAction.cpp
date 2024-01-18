@@ -69,7 +69,7 @@ void StringToCreate (string input){
         int numberOfWords (CountWords(input));
         iss >> name >> role;
         if(role == "collector"){ //collector
-            if (numberOfWords == 3){ //regular collector
+            if (numberOfWords == 4){ //regular collector
                 int coolDown;
                 iss >> coolDown;
                 CollectorVolunteer* CV = new CollectorVolunteer(id, name, coolDown); ///////////////////////////////////////////////////////////new
@@ -79,7 +79,7 @@ void StringToCreate (string input){
                 LimitedCollectorVolunteer* LCV = new LimitedCollectorVolunteer(id, name, coolDown, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
             }
         } else{ //driver
-            if (numberOfWords == 4){ //regular driver
+            if (numberOfWords == 5){ //regular driver
                 int maxDistance, distancePerStep;
                 iss >> maxDistance >> distancePerStep;
                 DriverVolunteer* DV = new DriverVolunteer(id, name, maxDistance, distancePerStep); ///////////////////////////////////////////////////////////new
