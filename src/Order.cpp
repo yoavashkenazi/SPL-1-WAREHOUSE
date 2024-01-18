@@ -1,6 +1,6 @@
 #include "../include/Order.h"
 
-Order::Order(int id, int customerId, int distance) : id(id), customerId(customerId), distance(distance)
+Order::Order(int id, int customerId, int distance) : id(id), customerId(customerId), distance(distance), status(OrderStatus::PENDING), collectorId(NO_VOLUNTEER), driverId(NO_VOLUNTEER)
 {
 }
 int Order::getId() const
