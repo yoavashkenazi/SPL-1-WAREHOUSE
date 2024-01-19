@@ -79,3 +79,25 @@ int LimitedCollectorVolunteer::getNumOrdersLeft() const
 string LimitedCollectorVolunteer::toString() const
 {
 }
+
+DriverVolunteer::DriverVolunteer(int id, string name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
+DriverVolunteer *DriverVolunteer::clone() const {}
+
+int DriverVolunteer::getDistanceLeft() const {}
+int DriverVolunteer::getMaxDistance() const {}
+int DriverVolunteer::getDistancePerStep() const {}
+bool DriverVolunteer::decreaseDistanceLeft() {} // Decrease distanceLeft by distancePerStep,return true if distanceLeft<=0,false otherwise
+bool DriverVolunteer::hasOrdersLeft() const {}
+bool DriverVolunteer::canTakeOrder(const Order &order) const {} // Signal if the volunteer is not busy and the order is within the maxDistance
+void DriverVolunteer::acceptOrder(const Order &order) {}        // Reset distanceLeft to maxDistance
+void DriverVolunteer::step() {}                                 // Decrease distanceLeft by distancePerStep
+string DriverVolunteer::toString() const {}
+
+LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders) {}
+LimitedDriverVolunteer *LimitedDriverVolunteer ::clone() const {}
+int LimitedDriverVolunteer ::getMaxOrders() const {}
+int LimitedDriverVolunteer ::getNumOrdersLeft() const {}
+bool LimitedDriverVolunteer ::hasOrdersLeft() const {}
+bool LimitedDriverVolunteer ::canTakeOrder(const Order &order) const {} // Signal if the volunteer is not busy, the order is within the maxDistance and have orders left
+void LimitedDriverVolunteer ::acceptOrder(const Order &order) {}        // Reset distanceLeft to maxDistance and decrease ordersLeft
+string LimitedDriverVolunteer ::toString() const {}

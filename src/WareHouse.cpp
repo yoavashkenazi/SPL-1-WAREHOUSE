@@ -1,11 +1,12 @@
 #include "../include/WareHouse.h"
+#include "../include/Volunteer.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 
 WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0)
 {
-    this->configFileProccessing(configFilePath)
+    this->configFileProccessing(configFilePath);
 }
 
 void WareHouse::start()
@@ -20,9 +21,11 @@ const vector<BaseAction *> &WareHouse::getActionsLog() const
 }
 void WareHouse::addOrder(Order *order)
 {
+    pendingOrders.insert(pendingOrders.begin(), order)
 }
 void WareHouse::addAction(BaseAction *action)
 {
+    actionsLog.push_back(action);
 }
 void WareHouse::printActionsLogs()
 {
@@ -84,6 +87,7 @@ void WareHouse::open()
 
 void WareHouse::AddCustomer(Customer *customer)
 {
+    customers.push_back(customer);
 }
 
 void WareHouse::configFileProccessing(const string &configFilePath)
