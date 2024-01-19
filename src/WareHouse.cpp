@@ -21,7 +21,7 @@ const vector<BaseAction *> &WareHouse::getActionsLog() const
 }
 void WareHouse::addOrder(Order *order)
 {
-    pendingOrders.insert(pendingOrders.begin(), order)
+    pendingOrders.insert(pendingOrders.begin(), order);
 }
 void WareHouse::addAction(BaseAction *action)
 {
