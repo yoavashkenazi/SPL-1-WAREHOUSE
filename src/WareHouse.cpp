@@ -1,5 +1,6 @@
 #include "../include/WareHouse.h"
 #include "../include/Volunteer.h"
+#include "../include/BaseAction.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -29,6 +30,10 @@ void WareHouse::addAction(BaseAction *action)
 }
 void WareHouse::printActionsLogs()
 {
+    for (BaseAction *action : this->actionsLog)
+    {
+        std::cout << action->toString() << std::endl;
+    }
 }
 Customer &WareHouse::getCustomer(int customerId) const
 {
