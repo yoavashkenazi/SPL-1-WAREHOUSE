@@ -14,6 +14,10 @@ void WareHouse::start()
 {
     std::cerr << "Warehouse is open!" << std::endl;
     this->open();
+    while (this->isOpen)
+    {
+        break;
+    }
 }
 
 const vector<BaseAction *> &WareHouse::getActionsLog() const
