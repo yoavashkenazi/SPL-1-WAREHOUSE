@@ -1,5 +1,7 @@
 #include "../include/Volunteer.h"
 #include "../include/WareHouse.h"
+#include <iostream>
+#include <sstream>
 
 Volunteer ::Volunteer(int id, const string &name) : completedOrderId(NO_ORDER), activeOrderId(NO_ORDER), id(id), name(name)
 {
@@ -67,7 +69,23 @@ void CollectorVolunteer ::acceptOrder(const Order &order)
     this->activeOrderId = order.getId();
     this->timeLeft = this->coolDown;
 }
-string CollectorVolunteer ::toString() const {}
+string CollectorVolunteer ::toString() const
+{
+    string orderIdStr = "None";
+    string timeLeftStr = "None";
+    if (this->isBusy())
+    {
+        orderIdStr = std::to_string(this->getActiveOrderId());
+        timeLeftStr = std::to_string(this->getTimeLeft());
+    }
+    std::ostringstream oss;
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
+        << "OrderID: " << orderIdStr << "!\n"
+        << "TimeLeft: " << timeLeftStr << "!\n"
+        << "OrdersLeft: NO LIMIT";
+    return oss.str();
+}
 
 LimitedCollectorVolunteer ::LimitedCollectorVolunteer(int id, string name, int coolDown, int maxOrders) : CollectorVolunteer(id, name, coolDown), maxOrders(maxOrders), ordersLeft(maxOrders)
 {
@@ -101,6 +119,20 @@ int LimitedCollectorVolunteer::getNumOrdersLeft() const
 }
 string LimitedCollectorVolunteer::toString() const
 {
+    string orderIdStr = "None";
+    string timeLeftStr = "None";
+    if (this->isBusy())
+    {
+        orderIdStr = std::to_string(this->getActiveOrderId());
+        timeLeftStr = std::to_string(this->getTimeLeft());
+    }
+    std::ostringstream oss;
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
+        << "OrderID: " << orderIdStr << "!\n"
+        << "TimeLeft: " << timeLeftStr << "!\n"
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft());
+    return oss.str();
 }
 
 DriverVolunteer::DriverVolunteer(int id, string name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
@@ -144,7 +176,23 @@ void DriverVolunteer::step() // Decrease distanceLeft by distancePerStep
         this->activeOrderId = NO_ORDER;
     }
 }
-string DriverVolunteer::toString() const {}
+string DriverVolunteer::toString() const
+{
+    string orderIdStr = "None";
+    string distanceLeftStr = "None";
+    if (this->isBusy())
+    {
+        orderIdStr = std::to_string(this->getActiveOrderId());
+        distanceLeftStr = std::to_string(this->getDistanceLeft());
+    }
+    std::ostringstream oss;
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
+        << "OrderID: " << orderIdStr << "!\n"
+        << "DistanceLeft: " << distanceLeftStr << "!\n"
+        << "OrdersLeft: NO LIMIT";
+    return oss.str();
+}
 
 LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders), ordersLeft(maxOrders) {}
 LimitedDriverVolunteer *LimitedDriverVolunteer ::clone() const {}
@@ -170,4 +218,20 @@ void LimitedDriverVolunteer ::acceptOrder(const Order &order) // Reset distanceL
     DriverVolunteer::acceptOrder(order);
     this->ordersLeft = this->ordersLeft - 1;
 }
-string LimitedDriverVolunteer ::toString() const {}
+string LimitedDriverVolunteer ::toString() const
+{
+    string orderIdStr = "None";
+    string distanceLeftStr = "None";
+    if (this->isBusy())
+    {
+        orderIdStr = std::to_string(this->getActiveOrderId());
+        distanceLeftStr = std::to_string(this->getDistanceLeft());
+    }
+    std::ostringstream oss;
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
+        << "OrderID: " << orderIdStr << "!\n"
+        << "DistanceLeft: " << distanceLeftStr << "!\n"
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft());
+    return oss.str();
+}
