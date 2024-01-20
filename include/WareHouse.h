@@ -26,7 +26,7 @@ public:
     Order &getOrder(int orderId) const;
     void close();
     void open();
-    void AddCustomer(Customer *customer);
+    void AddCustomer(Customer *customer); //**
 
 private:
     bool isOpen;
