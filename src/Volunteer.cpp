@@ -1,4 +1,5 @@
 #include "../include/Volunteer.h"
+#include "../include/WareHouse.h"
 
 Volunteer ::Volunteer(int id, const string &name) : completedOrderId(NO_ORDER), activeOrderId(NO_ORDER), id(id), name(name)
 {
@@ -31,7 +32,14 @@ CollectorVolunteer *CollectorVolunteer ::clone() const
 {
     return new CollectorVolunteer(getId(), getName(), getCoolDown());
 }
-void CollectorVolunteer ::step() {}
+void CollectorVolunteer ::step()
+{
+    if (decreaseCoolDown())
+    {
+        this->completedOrderId = this->activeOrderId;
+        this->activeOrderId = NO_ORDER;
+    }
+}
 int CollectorVolunteer ::getCoolDown() const
 {
     return this->coolDown;
@@ -40,20 +48,28 @@ int CollectorVolunteer ::getTimeLeft() const
 {
     return this->timeLeft;
 }
-bool CollectorVolunteer ::decreaseCoolDown()
+bool CollectorVolunteer ::decreaseCoolDown() // Decrease timeLeft by 1,return true if timeLeft=0,false otherwise
 {
     this->timeLeft = this->timeLeft - 1;
     return (this->timeLeft == 0);
-} // Decrease timeLeft by 1,return true if timeLeft=0,false otherwise
+}
 bool CollectorVolunteer ::hasOrdersLeft() const
 {
     return true;
 }
-bool CollectorVolunteer ::canTakeOrder(const Order &order) const {}
-void CollectorVolunteer ::acceptOrder(const Order &order) {}
+bool CollectorVolunteer ::canTakeOrder(const Order &order) const
+{
+    return (!isBusy());
+}
+void CollectorVolunteer ::acceptOrder(const Order &order)
+{
+    // assumes that the volunteer can take order
+    this->activeOrderId = order.getId();
+    this->timeLeft = this->coolDown;
+}
 string CollectorVolunteer ::toString() const {}
 
-LimitedCollectorVolunteer ::LimitedCollectorVolunteer(int id, string name, int coolDown, int maxOrders) : CollectorVolunteer(id, name, coolDown), maxOrders(maxOrders)
+LimitedCollectorVolunteer ::LimitedCollectorVolunteer(int id, string name, int coolDown, int maxOrders) : CollectorVolunteer(id, name, coolDown), maxOrders(maxOrders), ordersLeft(maxOrders)
 {
 }
 
@@ -62,11 +78,18 @@ LimitedCollectorVolunteer *LimitedCollectorVolunteer::clone() const
 }
 bool LimitedCollectorVolunteer::hasOrdersLeft() const
 {
+    return (this->ordersLeft > 0);
 }
 bool LimitedCollectorVolunteer::canTakeOrder(const Order &order) const
 {
+    return (!isBusy() && hasOrdersLeft());
 }
-void LimitedCollectorVolunteer::acceptOrder(const Order &order) {}
+void LimitedCollectorVolunteer::acceptOrder(const Order &order)
+{
+    // assumes that the volunteer can take order
+    CollectorVolunteer::acceptOrder(order);
+    this->ordersLeft = this->ordersLeft - 1;
+}
 
 int LimitedCollectorVolunteer::getMaxOrders() const
 {
@@ -82,22 +105,69 @@ string LimitedCollectorVolunteer::toString() const
 
 DriverVolunteer::DriverVolunteer(int id, string name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
 DriverVolunteer *DriverVolunteer::clone() const {}
-
-int DriverVolunteer::getDistanceLeft() const {}
-int DriverVolunteer::getMaxDistance() const {}
-int DriverVolunteer::getDistancePerStep() const {}
-bool DriverVolunteer::decreaseDistanceLeft() {} // Decrease distanceLeft by distancePerStep,return true if distanceLeft<=0,false otherwise
-bool DriverVolunteer::hasOrdersLeft() const {}
-bool DriverVolunteer::canTakeOrder(const Order &order) const {} // Signal if the volunteer is not busy and the order is within the maxDistance
-void DriverVolunteer::acceptOrder(const Order &order) {}        // Reset distanceLeft to maxDistance
-void DriverVolunteer::step() {}                                 // Decrease distanceLeft by distancePerStep
+int DriverVolunteer::getDistanceLeft() const
+{
+    return this->distanceLeft;
+}
+int DriverVolunteer::getMaxDistance() const
+{
+    return this->maxDistance;
+}
+int DriverVolunteer::getDistancePerStep() const
+{
+    return this->distancePerStep;
+}
+bool DriverVolunteer::decreaseDistanceLeft() // Decrease distanceLeft by distancePerStep,return true if distanceLeft<=0,false otherwise
+{
+    this->distanceLeft = this->distanceLeft - distancePerStep;
+    return this->distanceLeft <= 0;
+}
+bool DriverVolunteer::hasOrdersLeft() const
+{
+    return true;
+}
+bool DriverVolunteer::canTakeOrder(const Order &order) const // Signal if the volunteer is not busy and the order is within the maxDistance
+{
+    return (!isBusy() && order.getDistance() <= this->getMaxDistance());
+}
+void DriverVolunteer::acceptOrder(const Order &order) // Reset distanceLeft to maxDistance
+{
+    // assumes that the volunteer can take order
+    this->activeOrderId = order.getId();
+    this->distanceLeft = order.getDistance();
+}
+void DriverVolunteer::step() // Decrease distanceLeft by distancePerStep
+{
+    if (decreaseDistanceLeft())
+    {
+        this->completedOrderId = this->activeOrderId;
+        this->activeOrderId = NO_ORDER;
+    }
+}
 string DriverVolunteer::toString() const {}
 
-LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders) {}
+LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders), ordersLeft(maxOrders) {}
 LimitedDriverVolunteer *LimitedDriverVolunteer ::clone() const {}
-int LimitedDriverVolunteer ::getMaxOrders() const {}
-int LimitedDriverVolunteer ::getNumOrdersLeft() const {}
-bool LimitedDriverVolunteer ::hasOrdersLeft() const {}
-bool LimitedDriverVolunteer ::canTakeOrder(const Order &order) const {} // Signal if the volunteer is not busy, the order is within the maxDistance and have orders left
-void LimitedDriverVolunteer ::acceptOrder(const Order &order) {}        // Reset distanceLeft to maxDistance and decrease ordersLeft
+int LimitedDriverVolunteer ::getMaxOrders() const
+{
+    return this->maxOrders;
+}
+int LimitedDriverVolunteer ::getNumOrdersLeft() const
+{
+    return this->ordersLeft;
+}
+bool LimitedDriverVolunteer ::hasOrdersLeft() const
+{
+    return (this->ordersLeft > 0);
+}
+bool LimitedDriverVolunteer ::canTakeOrder(const Order &order) const // Signal if the volunteer is not busy, the order is within the maxDistance and have orders left
+{
+    (!isBusy() && order.getDistance() <= this->getMaxDistance() && hasOrdersLeft());
+}
+void LimitedDriverVolunteer ::acceptOrder(const Order &order) // Reset distanceLeft to maxDistance and decrease ordersLeft
+{
+    // assumes that the volunteer can take order
+    DriverVolunteer::acceptOrder(order);
+    this->ordersLeft = this->ordersLeft - 1;
+}
 string LimitedDriverVolunteer ::toString() const {}
