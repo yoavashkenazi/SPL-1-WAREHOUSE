@@ -36,3 +36,8 @@ OrderStatus Order::getStatus() const
     return this->status;
 }
 const string Order::toString() const {}
+
+const int Order::getDistance() const
+{
+    return this->distance;
+}
