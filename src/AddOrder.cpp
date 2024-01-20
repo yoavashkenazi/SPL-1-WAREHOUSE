@@ -1,5 +1,5 @@
 #include "../include/BaseAction.h";
-
+//test
 //needed to be added: wareHouse.getCustomerCounter(), wareHouse.CustomerExist()
 
 AddOrder::AddOrder(int id): customerId(id), errorMsg(""), status(ERROR) {
