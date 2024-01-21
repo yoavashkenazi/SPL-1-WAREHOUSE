@@ -79,11 +79,11 @@ string CollectorVolunteer ::toString() const
         timeLeftStr = std::to_string(this->getTimeLeft());
     }
     std::ostringstream oss;
-    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
-        << "OrderID: " << orderIdStr << "!\n"
-        << "TimeLeft: " << timeLeftStr << "!\n"
-        << "OrdersLeft: NO LIMIT";
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "OrderID: " << orderIdStr << "\n"
+        << "TimeLeft: " << timeLeftStr << "\n"
+        << "OrdersLeft: NO LIMIT"<< "\n";
     return oss.str();
 }
 
@@ -127,11 +127,11 @@ string LimitedCollectorVolunteer::toString() const
         timeLeftStr = std::to_string(this->getTimeLeft());
     }
     std::ostringstream oss;
-    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
-        << "OrderID: " << orderIdStr << "!\n"
-        << "TimeLeft: " << timeLeftStr << "!\n"
-        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft());
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "OrderID: " << orderIdStr << "\n"
+        << "TimeLeft: " << timeLeftStr << "\n"
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft())<< "\n";
     return oss.str();
 }
 
@@ -189,11 +189,11 @@ string DriverVolunteer::toString() const
         distanceLeftStr = std::to_string(this->getDistanceLeft());
     }
     std::ostringstream oss;
-    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
-        << "OrderID: " << orderIdStr << "!\n"
-        << "DistanceLeft: " << distanceLeftStr << "!\n"
-        << "OrdersLeft: NO LIMIT";
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "OrderID: " << orderIdStr << "\n"
+        << "DistanceLeft: " << distanceLeftStr << "\n"
+        << "OrdersLeft: NO LIMIT"<< "\n";
     return oss.str();
 }
 
@@ -234,10 +234,10 @@ string LimitedDriverVolunteer ::toString() const
         distanceLeftStr = std::to_string(this->getDistanceLeft());
     }
     std::ostringstream oss;
-    oss << "VolunteerID: " << std::to_string(this->getId()) << "!\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "!\n"
-        << "OrderID: " << orderIdStr << "!\n"
-        << "DistanceLeft: " << distanceLeftStr << "!\n"
-        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft());
+    oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
+        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "OrderID: " << orderIdStr << "\n"
+        << "DistanceLeft: " << distanceLeftStr << "\n"
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft())<< "\n";
     return oss.str();
 }

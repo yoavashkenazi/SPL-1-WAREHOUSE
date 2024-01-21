@@ -3,3 +3,5 @@
 SimulateStep::SimulateStep(int numOfSteps): numOfSteps(numOfSteps) {
 }
 void SimulateStep::act(WareHouse &WareHouse){}
+std::string SimulateStep::toString() const {}
+SimulateStep *SimulateStep::clone() const {}

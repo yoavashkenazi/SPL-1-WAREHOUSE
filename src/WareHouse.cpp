@@ -241,6 +241,8 @@ void WareHouse::InputToAction(string input)
         action->act(*this);
         actionsLog.push_back(action);
     }
+    else {cout<< "The Program did nothing, check the input or the code :)" << endl;}
+    
 }
 
 ///////צריך להעביר למחלקה שבה יש את הקאונטר של הת.ז של האנשים
@@ -305,6 +307,7 @@ void WareHouse::ConfigLineProccessing(string input)
                 volunteers.push_back(ldv);
             }
         }
+        this->volunteerCounter++;
     }
 }
 

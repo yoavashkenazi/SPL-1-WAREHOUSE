@@ -62,11 +62,11 @@ const string Order::toString() const
     }
 
     std::ostringstream oss;
-    oss << "OrderID: " << std::to_string(this->getId()) << "!\n"
-        << "OrderStatus: " << statusStr << "!\n"
-        << "CustomerID: " << std::to_string(this->getId()) << "!\n"
-        << "Collector: " << collectorIdStr << "!\n"
-        << "Driver: " << driverIdStr;
+    oss << "OrderID: " << std::to_string(this->getId()) << "\n"
+        << "OrderStatus: " << statusStr << "\n"
+        << "CustomerID: " << std::to_string(this->getId()) << "\n"
+        << "Collector: " << collectorIdStr << "\n"
+        << "Driver: " << driverIdStr <<"\n";
     return oss.str();
 }
 const int Order::getDistance() const

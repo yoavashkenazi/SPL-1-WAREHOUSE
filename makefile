@@ -2,7 +2,7 @@
 all: clean compile link
 
 link:
-	g++ -o bin/hello bin/main.o bin/WareHouse.o bin/AddOrder.o bin/Volunteer.o bin/Order.o bin/Customer.o bin/PrintCustomerStatus.o bin/PrintOrderStatus.o bin/SimulateStep.o bin/BaseAction.o bin/AddCustomer.o
+	g++ -o bin/hello bin/main.o bin/WareHouse.o bin/AddOrder.o bin/Volunteer.o bin/Order.o bin/Customer.o bin/PrintCustomerStatus.o bin/PrintOrderStatus.o bin/SimulateStep.o bin/BaseAction.o bin/PrintVolunteerStatus.o bin/AddCustomer.o bin/PrintActionsLog.o bin/Close.o bin/BackupWareHouse.o bin/RestoreWareHouse.o
 
 compile:
 	g++ -g -Wall -Weffc++ -c -o bin/main.o src/main.cpp
@@ -17,6 +17,10 @@ compile:
 	g++ -g -Wall -Weffc++ -c -o bin/BaseAction.o src/BaseAction.cpp
 	g++ -g -Wall -Weffc++ -c -o bin/PrintVolunteerStatus.o src/PrintVolunteerStatus.cpp
 	g++ -g -Wall -Weffc++ -c -o bin/AddCustomer.o src/AddCustomer.cpp
+	g++ -g -Wall -Weffc++ -c -o bin/PrintActionsLog.o src/PrintActionsLog.cpp
+	g++ -g -Wall -Weffc++ -c -o bin/Close.o src/Close.cpp
+	g++ -g -Wall -Weffc++ -c -o bin/BackupWareHouse.o src/BackupWareHouse.cpp
+	g++ -g -Wall -Weffc++ -c -o bin/RestoreWareHouse.o src/RestoreWareHouse.cpp
 
 clean:
 	rm -f bin/*
