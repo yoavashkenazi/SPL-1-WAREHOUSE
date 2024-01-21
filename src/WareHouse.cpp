@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 
-WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0), ordersCounter(0)
+WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0), orderCounter(0)
 {
     this->configFileProccessing(configFilePath);
 }
@@ -21,7 +21,7 @@ void WareHouse::start()
     }
 }
 
-const vector<BaseAction *> &WareHouse::getActionsLog() const
+const vector<BaseAction *> &WareHouse::getActions() const
 {
     return this->actionsLog;
 }
@@ -33,13 +33,6 @@ void WareHouse::addOrder(Order *order)
 void WareHouse::addAction(BaseAction *action)
 {
     actionsLog.push_back(action);
-}
-void WareHouse::printActionsLogs()
-{
-    for (BaseAction *action : this->actionsLog)
-    {
-        std::cout << action->toString() << std::endl;
-    }
 }
 Customer &WareHouse::getCustomer(int customerId) const
 {

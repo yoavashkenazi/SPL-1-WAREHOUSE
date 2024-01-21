@@ -27,7 +27,7 @@ bool Customer::canMakeOrder() const // Returns true if the customer didn't reach
 {
     return (this->getNumOrders() <= this->getMaxOrders());
 }
-vector<int> &Customer::getOrders() const
+const vector<int> &Customer::getOrdersIds() const
 {
     vector<int> ordersIdRef = this->ordersId;
     return ordersIdRef;

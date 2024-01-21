@@ -15,7 +15,7 @@ string CustomerTypeToString (CustomerType input){
     else{ return "civilian";}
 }
 
-AddCustomer::AddCustomer(string customerName, string customerType, int distance, int maxOrders): BaseAction(), customerName(customerName), customerType(stringToCustomerType(customerType)), distance(distance), maxOrders(maxOrders)  {}
+AddCustomer::AddCustomer(const string &customerName, const string &customerType, int distance, int maxOrders): BaseAction(), customerName(customerName), customerType(stringToCustomerType(customerType)), distance(distance), maxOrders(maxOrders)  {}
 
 void AddCustomer::act(WareHouse &wareHouse) {
     if (customerType == CustomerType::Soldier){

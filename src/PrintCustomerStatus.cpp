@@ -30,7 +30,7 @@ void PrintCustomerStatus::act(WareHouse &wareHouse){
     else{
         Customer c = wareHouse.getCustomer(customerId);
         cout << "CustomerID" + std::to_string(customerId) << endl;
-        vector<int> ordersId = c.getOrders();
+        vector<int> ordersId = c.getOrdersIds();
         for (int i : ordersId){
             cout << "OrderID: " + std::to_string(i) << endl;
             cout << "OrderStatus: " + orderStatusToString((wareHouse.getOrder(i)).getStatus()) << endl;
