@@ -166,54 +166,74 @@ void WareHouse::InputToAction(string input)
     {
         int numOfSteps;
         iss >> numOfSteps;
-        SimulateStep action(numOfSteps);
+        SimulateStep* action = new SimulateStep(numOfSteps);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "order")
     {
         int customerId;
         iss >> customerId;
-        AddOrder action(customerId);
+        AddOrder* action = new AddOrder(customerId);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "customer")
     {
         string name, cType;
         int distance, maxOrders;
         iss >> name >> cType >> distance >> maxOrders;
-        AddCustomer action(name, cType, distance, maxOrders);
+        AddCustomer* action = new AddCustomer(name, cType, distance, maxOrders);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "orderStatus")
     {
         int id;
         iss >> id;
-        PrintOrderStatus action(id);
+        PrintOrderStatus* action = new PrintOrderStatus(id);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "customerStatus")
     {
         int customerId;
         iss >> customerId;
-        PrintCustomerStatus action(customerId);
+        PrintCustomerStatus* action = new PrintCustomerStatus(customerId);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "volunteerStatus")
     {
         int volunteerId;
         iss >> volunteerId;
-        PrintVolunteerStatus action(volunteerId);
+        PrintVolunteerStatus* action = new PrintVolunteerStatus(volunteerId);
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "log")
     {
-        PrintActionsLog action();
+        PrintActionsLog* action = new PrintActionsLog();
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "close")
     {
-        Close action();
+        Close* action = new Close();
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "backup")
     {
-        BackupWareHouse action();
+        BackupWareHouse* action = new BackupWareHouse();
+        action->act(*this);
+        actionsLog.push_back(action);
     }
     else if (firstWord == "restore")
     {
-        RestoreWareHouse action();
+        RestoreWareHouse* action = new RestoreWareHouse();
+        action->act(*this);
+        actionsLog.push_back(action);
     }
 }
 
@@ -231,11 +251,13 @@ void WareHouse::ConfigLineProccess(string input)
         iss >> name >> cType >> distance >> maxOrders;
         if (cType == "soldier")
         {
-            SoldierCustomer *SC = new SoldierCustomer(id, name, distance, maxOrders); ///////////////////////////////////////////////////////////new
+            SoldierCustomer *sc = new SoldierCustomer(getCustomerCounter(), name, distance, maxOrders); ///////////////////////////////////////////////////////////new
+            this->AddCustomer(sc);
         }
         else
         {
-            CivilianCustomer *CC = new CivilianCustomer(id, name, distance, maxOrders); ///////////////////////////////////////////////////////////new
+            CivilianCustomer *cc = new CivilianCustomer(getCustomerCounter(), name, distance, maxOrders); ///////////////////////////////////////////////////////////new
+            this->AddCustomer(cc);
         }
     }
     else
@@ -249,13 +271,15 @@ void WareHouse::ConfigLineProccess(string input)
             { // regular collector
                 int coolDown;
                 iss >> coolDown;
-                CollectorVolunteer *CV = new CollectorVolunteer(id, name, coolDown); ///////////////////////////////////////////////////////////new
+                CollectorVolunteer *cv = new CollectorVolunteer(getVolunteerCounter(), name, coolDown); ///////////////////////////////////////////////////////////new
+                volunteers.push_back(cv);
             }
             else
             { // limited collector
                 int coolDown, volunteerMaxOrders;
                 iss >> coolDown >> volunteerMaxOrders;
-                LimitedCollectorVolunteer *LCV = new LimitedCollectorVolunteer(id, name, coolDown, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+                LimitedCollectorVolunteer *lcv = new LimitedCollectorVolunteer(getVolunteerCounter(), name, coolDown, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+                volunteers.push_back(lcv);
             }
         }
         else
@@ -264,13 +288,15 @@ void WareHouse::ConfigLineProccess(string input)
             { // regular driver
                 int maxDistance, distancePerStep;
                 iss >> maxDistance >> distancePerStep;
-                DriverVolunteer *DV = new DriverVolunteer(id, name, maxDistance, distancePerStep); ///////////////////////////////////////////////////////////new
+                DriverVolunteer *dv = new DriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep); ///////////////////////////////////////////////////////////new
+                volunteers.push_back(dv);
             }
             else
             { // limited driver
                 int maxDistance, distancePerStep, volunteerMaxOrders;
                 iss >> maxDistance >> distancePerStep >> volunteerMaxOrders;
-                LimitedDriverVolunteer *DV = new LimitedDriverVolunteer(id, name, maxDistance, distancePerStep, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+                LimitedDriverVolunteer *ldv = new LimitedDriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+                volunteers.push_back(ldv);
             }
         }
     }
