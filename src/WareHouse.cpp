@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0)
+WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCounter(0), volunteerCounter(0), ordersCounter(0)
 {
     this->configFileProccessing(configFilePath);
 }
@@ -26,7 +26,8 @@ const vector<BaseAction *> &WareHouse::getActionsLog() const
 }
 void WareHouse::addOrder(Order *order)
 {
-    pendingOrders.insert(pendingOrders.begin(), order);
+    this->pendingOrders.insert(pendingOrders.begin(), order);
+    this->orderCounter = this->orderCounter + 1;
 }
 void WareHouse::addAction(BaseAction *action)
 {
@@ -97,6 +98,7 @@ void WareHouse::open()
 void WareHouse::AddCustomer(Customer *customer)
 {
     customers.push_back(customer);
+    this->customerCounter = this->customerCounter + 1;
 }
 
 void WareHouse::configFileProccessing(const string &configFilePath)
@@ -139,4 +141,17 @@ void WareHouse::configFileProccessing(const string &configFilePath)
 
     // Close the file
     inputFile.close();
+}
+
+int WareHouse::getCustomerCounter() const
+{
+    return this->customerCounter;
+}
+int WareHouse::getVolunteerCounter() const
+{
+    return this->volunteerCounter;
+}
+int WareHouse::getOrderCounter() const
+{
+    return this->orderCounter;
 }
