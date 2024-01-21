@@ -17,7 +17,10 @@ void WareHouse::start()
     this->open();
     while (this->isOpen)
     {
-        break;
+        cout << "Enter command:" << endl;
+        string input;
+        std::getline(std::cin, input);
+        this->InputToAction(input);
     }
 }
 
