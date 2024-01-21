@@ -1,4 +1,4 @@
-#include "../include/BaseAction.h"
+#include "../include/Action.h"
 #include "../include/Order.h"
 #include "../include/Customer.h"
 #include <iostream>
@@ -21,15 +21,15 @@ string orderStatusToString(OrderStatus status) {
     }
 }
 
-PrintVolunteerStatus::PrintVolunteerStatus(int id): BaseAction(), VolunteerId(id){}
+PrintVolunteerStatus::PrintVolunteerStatus(int id): BaseAction(), volunteerId(id){}
 
 void PrintVolunteerStatus::act(WareHouse &wareHouse){
-    if ((!wareHouse.VolunteerExist(VolunteerId)){ //if the volunteer doesnt exist
+    if ((!wareHouse.VolunteerExist(volunteerId)){ //if the volunteer doesnt exist
         this->error("Volunteer doesn't exist"); 
     }
     else{
-        Volunteer v = wareHouse.getVolunteer(VolunteerId);
-        // cout << "VolunteerID" + std::to_string(VolunteerId) << endl;
+        Volunteer v = wareHouse.getVolunteer(volunteerId);
+        // cout << "volunteerId" + std::to_string(volunteerId) << endl;
         // if (v.isBusy()) {
         //     cout << "isBusy: True" << endl;
         //     cout << "OrderID: " + std:to_string(v.getActiveOrderId()) << endl;
@@ -49,14 +49,14 @@ void PrintVolunteerStatus::act(WareHouse &wareHouse){
 string PrintVolunteerStatus::toString() const {
     string output;
     if (this->getStatus() == ActionStatus::COMPLETED){
-        output = "volunteerStatus " + std::to_string(VolunteerId) + " COMPLETED";}
+        output = "volunteerStatus " + std::to_string(volunteerId) + " COMPLETED";}
     else{
-        output = "volunteerStatus " + std::to_string(VolunteerId) + " ERROR";}
+        output = "volunteerStatus " + std::to_string(volunteerId) + " ERROR";}
     return output;
 }
 
 PrintVolunteerStatus *PrintVolunteerStatus::clone() const {
-    PrintVolunteerStatus* clonePrintVolunteerStatus = new PrintVolunteerStatus(customerId);
+    PrintVolunteerStatus* clonePrintVolunteerStatus = new PrintVolunteerStatus(volunteerId);
     if(this->getStatus() == ActionStatus::COMPLETED){
         clonePrintVolunteerStatus->complete();}
     else{
