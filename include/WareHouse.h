@@ -26,7 +26,10 @@ public:
     Order &getOrder(int orderId) const;
     void close();
     void open();
-    void AddCustomer(Customer *customer); //**
+    void AddCustomer(Customer *customer); //** add customer to the warehouse
+    int getCustomerCounter() const;
+    int getVolunteerCounter() const;
+    int getOrderCounter() const;
 
 private:
     bool isOpen;
@@ -39,4 +42,5 @@ private:
     int customerCounter;  // For assigning unique customer IDs
     int volunteerCounter; // For assigning unique volunteer IDs
     void configFileProccessing(const string &configFilePath);
+    int orderCounter; // ** for assigning unique order IDs
 };
