@@ -29,8 +29,7 @@ bool Customer::canMakeOrder() const // Returns true if the customer didn't reach
 }
 const vector<int> &Customer::getOrdersIds() const
 {
-    vector<int> ordersIdRef = this->ordersId;
-    return ordersIdRef;
+    return this->ordersId;
 }
 int Customer::addOrder(int orderId) // return OrderId if order was added successfully, -1 otherwise
 {
@@ -45,8 +44,16 @@ int Customer::addOrder(int orderId) // return OrderId if order was added success
     return orderId;
 }
 
-SoldierCustomer::SoldierCustomer(int id, const string &name, int locationDistance, int maxOrders);
-SoldierCustomer *SoldierCustomer::clone() const override;
+SoldierCustomer::SoldierCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
+{
+}
+SoldierCustomer *SoldierCustomer::clone() const
+{
+}
 
-CivilianCustomer ::CivilianCustomer(int id, const string &name, int locationDistance, int maxOrders);
-CivilianCustomer *SoldierCustomer::clone() const override;
+CivilianCustomer ::CivilianCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
+{
+}
+CivilianCustomer *CivilianCustomer::clone() const
+{
+}

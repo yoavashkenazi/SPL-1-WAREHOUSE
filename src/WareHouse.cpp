@@ -92,7 +92,7 @@ void WareHouse::open()
     this->isOpen = true;
 }
 
-void WareHouse::AddCustomer(Customer *customer)
+void WareHouse::addCustomer(Customer *customer)
 {
     customers.push_back(customer);
     this->customerCounter = this->customerCounter + 1;
@@ -132,7 +132,7 @@ void WareHouse::configFileProccessing(const string &configFilePath)
         // Process each line
         if (!result[0].empty())
         {
-            std::cout << result[0] << std::endl;
+            this->ConfigLineProccessing(result[0]);
         }
     }
 
@@ -153,6 +153,11 @@ int WareHouse::getOrderCounter() const
     return this->orderCounter;
 }
 
+bool WareHouse::customerExist(int id) const
+{
+    return id < this->customerCounter;
+}
+
 void WareHouse::InputToAction(string input)
 {
     std::istringstream iss(input);
@@ -162,7 +167,7 @@ void WareHouse::InputToAction(string input)
     {
         int numOfSteps;
         iss >> numOfSteps;
-        SimulateStep* action = new SimulateStep(numOfSteps);
+        SimulateStep *action = new SimulateStep(numOfSteps);
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -170,7 +175,7 @@ void WareHouse::InputToAction(string input)
     {
         int customerId;
         iss >> customerId;
-        AddOrder* action = new AddOrder(customerId);
+        AddOrder *action = new AddOrder(customerId);
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -179,7 +184,7 @@ void WareHouse::InputToAction(string input)
         string name, cType;
         int distance, maxOrders;
         iss >> name >> cType >> distance >> maxOrders;
-        AddCustomer* action = new AddCustomer(name, cType, distance, maxOrders);
+        AddCustomer *action = new AddCustomer(name, cType, distance, maxOrders);
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -187,7 +192,7 @@ void WareHouse::InputToAction(string input)
     {
         int id;
         iss >> id;
-        PrintOrderStatus* action = new PrintOrderStatus(id);
+        PrintOrderStatus *action = new PrintOrderStatus(id);
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -195,7 +200,7 @@ void WareHouse::InputToAction(string input)
     {
         int customerId;
         iss >> customerId;
-        PrintCustomerStatus* action = new PrintCustomerStatus(customerId);
+        PrintCustomerStatus *action = new PrintCustomerStatus(customerId);
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -203,31 +208,31 @@ void WareHouse::InputToAction(string input)
     {
         int volunteerId;
         iss >> volunteerId;
-        PrintVolunteerStatus* action = new PrintVolunteerStatus(volunteerId);
+        PrintVolunteerStatus *action = new PrintVolunteerStatus(volunteerId);
         action->act(*this);
         actionsLog.push_back(action);
     }
     else if (firstWord == "log")
     {
-        PrintActionsLog* action = new PrintActionsLog();
+        PrintActionsLog *action = new PrintActionsLog();
         action->act(*this);
         actionsLog.push_back(action);
     }
     else if (firstWord == "close")
     {
-        Close* action = new Close();
+        Close *action = new Close();
         action->act(*this);
         actionsLog.push_back(action);
     }
     else if (firstWord == "backup")
     {
-        BackupWareHouse* action = new BackupWareHouse();
+        BackupWareHouse *action = new BackupWareHouse();
         action->act(*this);
         actionsLog.push_back(action);
     }
     else if (firstWord == "restore")
     {
-        RestoreWareHouse* action = new RestoreWareHouse();
+        RestoreWareHouse *action = new RestoreWareHouse();
         action->act(*this);
         actionsLog.push_back(action);
     }
@@ -235,7 +240,7 @@ void WareHouse::InputToAction(string input)
 
 ///////צריך להעביר למחלקה שבה יש את הקאונטר של הת.ז של האנשים
 ///////וצריך להחליט על המיקום בזיכרון של הלקוחות והמתנדבים הראשונים
-void WareHouse::ConfigLineProccess(string input)
+void WareHouse::ConfigLineProccessing(string input)
 {
     std::istringstream iss(input);
     std::string firstWord;
@@ -248,12 +253,12 @@ void WareHouse::ConfigLineProccess(string input)
         if (cType == "soldier")
         {
             SoldierCustomer *sc = new SoldierCustomer(getCustomerCounter(), name, distance, maxOrders); ///////////////////////////////////////////////////////////new
-            this->AddCustomer(sc);
+            this->addCustomer(sc);
         }
         else
         {
             CivilianCustomer *cc = new CivilianCustomer(getCustomerCounter(), name, distance, maxOrders); ///////////////////////////////////////////////////////////new
-            this->AddCustomer(cc);
+            this->addCustomer(cc);
         }
     }
     else

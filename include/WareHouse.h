@@ -25,10 +25,11 @@ public:
     Order &getOrder(int orderId) const;
     void close();
     void open();
-    void AddCustomer(Customer *customer); //** add customer to the warehouse
+    void addCustomer(Customer *customer); //** add customer to the warehouse
     int getCustomerCounter() const;
     int getVolunteerCounter() const;
     int getOrderCounter() const;
+    bool customerExist(int id) const;
 
 private:
     bool isOpen;
@@ -43,6 +44,6 @@ private:
     void configFileProccessing(const string &configFilePath);
     int orderCounter; // ** for assigning unique order IDs
     void InputToAction(string input);
-    void ConfigLineProccess(string input);
+    void ConfigLineProccessing(string input);
     int CountWords(const std::string &input);
 };
