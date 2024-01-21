@@ -1,30 +1,38 @@
 #include "../include/BaseAction.h"
 #include "../include/Order.h"
-//test
-//needed to be added: wareHouse.getCustomerCounter(), wareHouse.CustomerExist()
+#include <iostream>
+#include <string>
 
-AddOrder::AddOrder(int id): customerId(id), BaseAction() {
-    
-}
+//needed to be added: wareHouse.getOrderCounter(), wareHouse.CustomerExist(int id)
+
+AddOrder::AddOrder(int id): customerId(id), BaseAction() {}
+
 void AddOrder::act(WareHouse &wareHouse) {
-    if ((!wareHouse.CustomerExist() || !(wareHouse.getCustomer(customerId).canMakeOrder())){
+    if ((!wareHouse.CustomerExist(customerId) || !(wareHouse.getCustomer(customerId).canMakeOrder())){
        this->error("Cannot place this order"); 
     } else{
-        Order* order = new Order(wareHouse.getCustomerCounter(), customerId, (wareHouse.getCustomer(customerId)).getCustomerDistance());
-        WareHouse.addOrder(order);
+        Order* order = new Order(wareHouse.getOrderCounter(), customerId, (wareHouse.getCustomer(customerId)).getCustomerDistance());
+        wareHouse.addOrder(order);
         complete();
     }
-    
-
 }
-string toString() {
+
+string AddOrder::toString() const {
     string output;
-    if (this->getStatus == ActionStatus::COMPLETED){
-        output = "order " + customerId + " COMPLETED"; }
+    if (this->getStatus() == ActionStatus::COMPLETED){
+        output = "order " + std::to_string(customerId) + " COMPLETED";}
     else{
-        output = "order " + this->customerId + " ERROR"; }
+        output = "order " + std::to_string(customerId) + " ERROR";}
     return output;
 }
-AddOrder *clone() {
 
+AddOrder *AddOrder::clone() const {
+    AddOrder* cloneAddOrder = new AddOrder(customerId);
+    if(this->getStatus() == ActionStatus::COMPLETED){
+        cloneAddOrder->complete();}
+    else{
+        cloneAddOrder->error(this->getErrorMsg());
+    }
+    return cloneAddOrder;
 }
+    
