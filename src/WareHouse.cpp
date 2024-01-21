@@ -158,6 +158,11 @@ bool WareHouse::customerExist(int id) const
     return id < this->customerCounter;
 }
 
+bool WareHouse::volunteerExist(int id) const
+{
+    return id < this->volunteerCounter;
+}
+
 void WareHouse::InputToAction(string input)
 {
     std::istringstream iss(input);

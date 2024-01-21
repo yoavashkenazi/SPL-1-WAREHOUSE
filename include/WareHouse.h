@@ -30,6 +30,7 @@ public:
     int getVolunteerCounter() const;
     int getOrderCounter() const;
     bool customerExist(int id) const;
+    bool volunteerExist(int id) const;
 
 private:
     bool isOpen;

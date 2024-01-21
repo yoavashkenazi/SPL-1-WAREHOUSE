@@ -39,15 +39,15 @@ OrderStatus Order::getStatus() const
 }
 const string Order::toString() const
 {
-    string statusStr = "COMPLETED";
+    string statusStr = "Completed";
     switch (this->getStatus())
     {
     case OrderStatus::PENDING:
-        statusStr = "PENDING";
+        statusStr = "Pending";
     case OrderStatus::COLLECTING:
-        statusStr = "COLLECTING";
+        statusStr = "Collecting";
     case OrderStatus::DELIVERING:
-        statusStr = "DELIVERING";
+        statusStr = "Delivering";
     }
 
     string collectorIdStr = "None";
