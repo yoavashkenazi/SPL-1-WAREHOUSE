@@ -43,4 +43,7 @@ private:
     int volunteerCounter; // For assigning unique volunteer IDs
     void configFileProccessing(const string &configFilePath);
     int orderCounter; // ** for assigning unique order IDs
+    void InputToAction(string input);
+    void ConfigLineProccess(string input);
+    int CountWords(const std::string &input);
 };
