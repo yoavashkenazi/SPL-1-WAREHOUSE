@@ -44,3 +44,9 @@ int Customer::addOrder(int orderId) // return OrderId if order was added success
     this->ordersId.push_back(orderId);
     return orderId;
 }
+
+SoldierCustomer::SoldierCustomer(int id, const string &name, int locationDistance, int maxOrders);
+SoldierCustomer *SoldierCustomer::clone() const override;
+
+CivilianCustomer ::CivilianCustomer(int id, const string &name, int locationDistance, int maxOrders);
+CivilianCustomer *SoldierCustomer::clone() const override;
