@@ -132,6 +132,8 @@ public:
     Close *clone() const override;
     string toString() const override;
 
+    string orderStatusToString(OrderStatus status);
+
 private:
 };
 

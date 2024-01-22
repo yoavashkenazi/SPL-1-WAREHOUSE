@@ -318,3 +318,15 @@ int WareHouse::CountWords(const std::string &input)
 
     return wordCount;
 }
+
+const vector<Order *> &WareHouse::getOrders(int i) const{ //returns the Orders vector 
+    if (i==0){
+        return this->pendingOrders;
+    }
+    else if(i==1){
+        return this->inProcessOrders;
+    }
+    else if (i==2){
+        return this->completedOrders;
+    }
+}

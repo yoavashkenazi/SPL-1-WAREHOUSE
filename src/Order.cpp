@@ -44,10 +44,13 @@ const string Order::toString() const
     {
     case OrderStatus::PENDING:
         statusStr = "Pending";
+        break;
     case OrderStatus::COLLECTING:
         statusStr = "Collecting";
+        break;
     case OrderStatus::DELIVERING:
-        statusStr = "Delivering";
+         statusStr = "Delivering";
+         break;
     }
 
     string collectorIdStr = "None";
@@ -64,7 +67,7 @@ const string Order::toString() const
     std::ostringstream oss;
     oss << "OrderID: " << std::to_string(this->getId()) << "\n"
         << "OrderStatus: " << statusStr << "\n"
-        << "CustomerID: " << std::to_string(this->getId()) << "\n"
+        << "CustomerID: " << std::to_string(this->getCustomerId()) << "\n"
         << "Collector: " << collectorIdStr << "\n"
         << "Driver: " << driverIdStr <<"\n";
     return oss.str();

@@ -5,7 +5,24 @@
 #include <string>
 
 
-PrintActionsLog::PrintActionsLog(){}
-void PrintActionsLog::act(WareHouse &wareHouse){} 
-PrintActionsLog *PrintActionsLog::clone() const{} 
-string PrintActionsLog::toString() const {}
+PrintActionsLog::PrintActionsLog(): BaseAction(){}
+void PrintActionsLog::act(WareHouse &wareHouse){
+    vector<BaseAction *> actionsVector = wareHouse.getActions();
+    for (BaseAction* ba : actionsVector){
+        cout << ba->toString() << endl;
+    }
+    this->complete();
+} 
+PrintActionsLog *PrintActionsLog::clone() const{
+    PrintActionsLog *clonePrintActionsLog = new PrintActionsLog();
+    if (this->getStatus() == ActionStatus::COMPLETED)
+    {
+        clonePrintActionsLog->complete();
+    }
+    return clonePrintActionsLog;
+} 
+string PrintActionsLog::toString() const {
+    string output;
+    output = "log COMPLETED";
+    return output;
+}
