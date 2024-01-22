@@ -71,19 +71,22 @@ void CollectorVolunteer ::acceptOrder(const Order &order)
 }
 string CollectorVolunteer ::toString() const
 {
+    string isBusyStr = "False";
     string orderIdStr = "None";
     string timeLeftStr = "None";
     if (this->isBusy())
     {
+        isBusyStr = "True";
         orderIdStr = std::to_string(this->getActiveOrderId());
         timeLeftStr = std::to_string(this->getTimeLeft());
     }
     std::ostringstream oss;
     oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "isBusy: " << isBusyStr << "\n"
         << "OrderID: " << orderIdStr << "\n"
         << "TimeLeft: " << timeLeftStr << "\n"
-        << "OrdersLeft: NO LIMIT"<< "\n";
+        << "OrdersLeft: NO LIMIT"
+        << "\n";
     return oss.str();
 }
 
@@ -119,19 +122,21 @@ int LimitedCollectorVolunteer::getNumOrdersLeft() const
 }
 string LimitedCollectorVolunteer::toString() const
 {
+    string isBusyStr = "False";
     string orderIdStr = "None";
     string timeLeftStr = "None";
     if (this->isBusy())
     {
+        isBusyStr = "True";
         orderIdStr = std::to_string(this->getActiveOrderId());
         timeLeftStr = std::to_string(this->getTimeLeft());
     }
     std::ostringstream oss;
     oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "isBusy: " << isBusyStr << "\n"
         << "OrderID: " << orderIdStr << "\n"
         << "TimeLeft: " << timeLeftStr << "\n"
-        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft())<< "\n";
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
 }
 
@@ -165,7 +170,7 @@ bool DriverVolunteer::canTakeOrder(const Order &order) const // Signal if the vo
 {
     return (!isBusy() && order.getDistance() <= this->getMaxDistance());
 }
-void DriverVolunteer::acceptOrder(const Order &order) // 
+void DriverVolunteer::acceptOrder(const Order &order) //
 {
     // assumes that the volunteer can take order
     this->activeOrderId = order.getId();
@@ -181,19 +186,22 @@ void DriverVolunteer::step() // Decrease distanceLeft by distancePerStep
 }
 string DriverVolunteer::toString() const
 {
+    string isBusyStr = "False";
     string orderIdStr = "None";
     string distanceLeftStr = "None";
     if (this->isBusy())
     {
+        isBusyStr = "True";
         orderIdStr = std::to_string(this->getActiveOrderId());
         distanceLeftStr = std::to_string(this->getDistanceLeft());
     }
     std::ostringstream oss;
     oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "isBusy: " << isBusyStr << "\n"
         << "OrderID: " << orderIdStr << "\n"
         << "DistanceLeft: " << distanceLeftStr << "\n"
-        << "OrdersLeft: NO LIMIT"<< "\n";
+        << "OrdersLeft: NO LIMIT"
+        << "\n";
     return oss.str();
 }
 
@@ -226,18 +234,20 @@ void LimitedDriverVolunteer ::acceptOrder(const Order &order) // Assign distance
 }
 string LimitedDriverVolunteer ::toString() const
 {
+    string isBusyStr = "False";
     string orderIdStr = "None";
     string distanceLeftStr = "None";
     if (this->isBusy())
     {
+        isBusyStr = "True";
         orderIdStr = std::to_string(this->getActiveOrderId());
         distanceLeftStr = std::to_string(this->getDistanceLeft());
     }
     std::ostringstream oss;
     oss << "VolunteerID: " << std::to_string(this->getId()) << "\n"
-        << "isBusy: " << std::to_string(this->isBusy()) << "\n"
+        << "isBusy: " << isBusyStr << "\n"
         << "OrderID: " << orderIdStr << "\n"
         << "DistanceLeft: " << distanceLeftStr << "\n"
-        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft())<< "\n";
+        << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
 }
