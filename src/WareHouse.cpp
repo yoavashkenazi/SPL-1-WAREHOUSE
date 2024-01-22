@@ -39,6 +39,40 @@ WareHouse::WareHouse(const WareHouse &other) : isOpen(other.isOpen), customerCou
     }
 }
 
+WareHouse::~WareHouse()
+{
+    for (const BaseAction *action : this->actionsLog)
+    {
+        delete action;
+        action = nullptr;
+    }
+    for (const Volunteer *volunteer : this->volunteers)
+    {
+        delete volunteer;
+        volunteer = nullptr;
+    }
+    for (const Order *order : this->pendingOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Order *order : this->inProcessOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Order *order : this->completedOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Customer *customer : this->customers)
+    {
+        delete customer;
+        customer = nullptr;
+    }
+}
+
 void WareHouse::start()
 {
     std::cerr << "Warehouse is open!" << std::endl;
@@ -190,7 +224,14 @@ bool WareHouse::customerExist(int id) const
 
 bool WareHouse::volunteerExist(int id) const
 {
-    return id < this->volunteerCounter;
+    for (Volunteer *v : this->volunteers)
+    {
+        if (v->getId() == id)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void WareHouse::InputToAction(string input)
@@ -365,7 +406,7 @@ const vector<Order *> &WareHouse::getOrders(int i)
     }
 }
 
-void WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector)
+bool WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector)
 {
     // move the orders between orders vectors
     for (int i = 0; i < fromVector.size(); ++i)
@@ -375,12 +416,31 @@ void WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> fromVector,
             // Element found, move to "toVector" and remove from "fromVector"
             toVector.push_back(std::move(fromVector[i]));
             fromVector.erase(fromVector.begin() + i);
-            break;
+            return true;
         }
     }
+    return false;
 }
 
 const vector<Volunteer *> &WareHouse::getVolunteers()
 {
     return this->volunteers;
+}
+
+bool WareHouse::deleteLimitedVolunteer(int id)
+{
+    // delete volunteer
+    for (int i = 0; i < this->volunteers.size(); ++i)
+    {
+        if (volunteers[i]->getId() == id)
+        {
+            // delete the volunteer
+            delete volunteers[i];
+            // delete the pointer from the vector
+            this->volunteers.erase(this->volunteers.begin() + i);
+            this->volunteerCounter--;
+            return true;
+        }
+    }
+    return false;
 }
