@@ -25,7 +25,7 @@ int Customer::getNumOrders() const // Returns num of orders the customer has mad
 }
 bool Customer::canMakeOrder() const // Returns true if the customer didn't reach max orders
 {
-    return (this->getNumOrders() <= this->getMaxOrders());
+    return (this->getNumOrders() < this->getMaxOrders());
 }
 const vector<int> &Customer::getOrdersIds() const
 {
@@ -33,6 +33,7 @@ const vector<int> &Customer::getOrdersIds() const
 }
 int Customer::addOrder(int orderId) // return OrderId if order was added successfully, -1 otherwise
 {
+    // assumes that the customer can make an order
     // check if id exists
     for (int id : this->ordersId)
     {
@@ -47,12 +48,14 @@ int Customer::addOrder(int orderId) // return OrderId if order was added success
 SoldierCustomer::SoldierCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
 {
 }
-SoldierCustomer *SoldierCustomer::clone() const {
-    return new SoldierCustomer()}
-
+SoldierCustomer *SoldierCustomer::clone() const
+{
+    return new SoldierCustomer(*this);
+}
 CivilianCustomer ::CivilianCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
 {
 }
 CivilianCustomer *CivilianCustomer::clone() const
 {
+    return new CivilianCustomer(*this);
 }
