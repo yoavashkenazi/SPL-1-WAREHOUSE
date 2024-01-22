@@ -47,9 +47,8 @@ int Customer::addOrder(int orderId) // return OrderId if order was added success
 SoldierCustomer::SoldierCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
 {
 }
-SoldierCustomer *SoldierCustomer::clone() const
-{
-}
+SoldierCustomer *SoldierCustomer::clone() const {
+    return new SoldierCustomer()}
 
 CivilianCustomer ::CivilianCustomer(int id, const string &name, int locationDistance, int maxOrders) : Customer(id, name, locationDistance, maxOrders)
 {
