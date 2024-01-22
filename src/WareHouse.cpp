@@ -275,37 +275,31 @@ void WareHouse::ConfigLineProccessing(string input)
         iss >> name >> role;
         if (role == "collector")
         { // collector
-            if (numberOfWords == 4)
-            { // regular collector
                 int coolDown;
                 iss >> coolDown;
                 CollectorVolunteer *cv = new CollectorVolunteer(getVolunteerCounter(), name, coolDown); ///////////////////////////////////////////////////////////new
                 volunteers.push_back(cv);
-            }
-            else
-            { // limited collector
-                int coolDown, volunteerMaxOrders;
-                iss >> coolDown >> volunteerMaxOrders;
-                LimitedCollectorVolunteer *lcv = new LimitedCollectorVolunteer(getVolunteerCounter(), name, coolDown, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
-                volunteers.push_back(lcv);
-            }
+        }
+        else if (role == "limited_collector")
+        { // limited collector
+            int coolDown, volunteerMaxOrders;
+            iss >> coolDown >> volunteerMaxOrders;
+            LimitedCollectorVolunteer *lcv = new LimitedCollectorVolunteer(getVolunteerCounter(), name, coolDown, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+            volunteers.push_back(lcv);
+        }
+        else if (role == "driver")
+        { // regular driver
+            int maxDistance, distancePerStep;
+            iss >> maxDistance >> distancePerStep;
+            DriverVolunteer *dv = new DriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep); ///////////////////////////////////////////////////////////new
+            volunteers.push_back(dv);
         }
         else
-        { // driver
-            if (numberOfWords == 5)
-            { // regular driver
-                int maxDistance, distancePerStep;
-                iss >> maxDistance >> distancePerStep;
-                DriverVolunteer *dv = new DriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep); ///////////////////////////////////////////////////////////new
-                volunteers.push_back(dv);
-            }
-            else
-            { // limited driver
-                int maxDistance, distancePerStep, volunteerMaxOrders;
-                iss >> maxDistance >> distancePerStep >> volunteerMaxOrders;
-                LimitedDriverVolunteer *ldv = new LimitedDriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
-                volunteers.push_back(ldv);
-            }
+        { // limited driver
+            int maxDistance, distancePerStep, volunteerMaxOrders;
+            iss >> maxDistance >> distancePerStep >> volunteerMaxOrders;
+            LimitedDriverVolunteer *ldv = new LimitedDriverVolunteer(getVolunteerCounter(), name, maxDistance, distancePerStep, volunteerMaxOrders); ///////////////////////////////////////////////////////////new
+            volunteers.push_back(ldv);
         }
         this->volunteerCounter++;
     }
