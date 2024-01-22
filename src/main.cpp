@@ -13,6 +13,7 @@ int main(int argc, char** argv){
     string configurationFile = argv[1];
     WareHouse wareHouse(configurationFile);
     wareHouse.start();
+    delete &wareHouse;
     if(backup!=nullptr){
         delete backup;
         backup = nullptr;
