@@ -11,13 +11,42 @@ WareHouse::WareHouse(const string &configFilePath) : isOpen(false), customerCoun
     this->configFileProccessing(configFilePath);
 }
 
+WareHouse::WareHouse(const WareHouse &other) : isOpen(other.isOpen), customerCounter(other.customerCounter), volunteerCounter(other.volunteerCounter), orderCounter(other.orderCounter)
+{
+    for (const BaseAction *originalAction : other.actionsLog)
+    {
+        this->actionsLog.push_back(originalAction->clone());
+    }
+    for (const Volunteer *originalVolunteer : other.volunteers)
+    {
+        this->volunteers.push_back(originalVolunteer->clone());
+    }
+    for (const Order *originalOrder : other.pendingOrders)
+    {
+        this->pendingOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Order *originalOrder : other.inProcessOrders)
+    {
+        this->inProcessOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Order *originalOrder : other.completedOrders)
+    {
+        this->completedOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Customer *originalCustomer : other.customers)
+    {
+        this->customers.push_back(originalCustomer->clone());
+    }
+}
+
 void WareHouse::start()
 {
     std::cerr << "Warehouse is open!" << std::endl;
     this->open();
     while (this->isOpen)
     {
-        cout << "Enter command:" << endl;
+        cout << " \n Enter command: \n"
+             << endl;
         string input;
         std::getline(std::cin, input);
         this->InputToAction(input);
@@ -30,8 +59,9 @@ const vector<BaseAction *> &WareHouse::getActions() const
 }
 void WareHouse::addOrder(Order *order)
 {
-    this->pendingOrders.insert(pendingOrders.begin(), order);
+    this->pendingOrders.push_back(order);
     this->orderCounter = this->orderCounter + 1;
+    this->getCustomer(order->getCustomerId()).addOrder(order->getId());
 }
 void WareHouse::addAction(BaseAction *action)
 {
@@ -241,12 +271,12 @@ void WareHouse::InputToAction(string input)
         action->act(*this);
         actionsLog.push_back(action);
     }
-    else {cout<< "The Program did nothing, check the input or the code :)" << endl;}
-    
+    else
+    {
+        cout << "The Program did nothing, check the input or the code :)" << endl;
+    }
 }
 
-///////צריך להעביר למחלקה שבה יש את הקאונטר של הת.ז של האנשים
-///////וצריך להחליט על המיקום בזיכרון של הלקוחות והמתנדבים הראשונים
 void WareHouse::ConfigLineProccessing(string input)
 {
     std::istringstream iss(input);
@@ -275,10 +305,10 @@ void WareHouse::ConfigLineProccessing(string input)
         iss >> name >> role;
         if (role == "collector")
         { // collector
-                int coolDown;
-                iss >> coolDown;
-                CollectorVolunteer *cv = new CollectorVolunteer(getVolunteerCounter(), name, coolDown); ///////////////////////////////////////////////////////////new
-                volunteers.push_back(cv);
+            int coolDown;
+            iss >> coolDown;
+            CollectorVolunteer *cv = new CollectorVolunteer(getVolunteerCounter(), name, coolDown); ///////////////////////////////////////////////////////////new
+            volunteers.push_back(cv);
         }
         else if (role == "limited_collector")
         { // limited collector
@@ -319,14 +349,38 @@ int WareHouse::CountWords(const std::string &input)
     return wordCount;
 }
 
-const vector<Order *> &WareHouse::getOrders(int i) const{ //returns the Orders vector 
-    if (i==0){
+const vector<Order *> &WareHouse::getOrders(int i)
+{ // returns the Orders vector
+    if (i == 0)
+    {
         return this->pendingOrders;
     }
-    else if(i==1){
+    else if (i == 1)
+    {
         return this->inProcessOrders;
     }
-    else if (i==2){
+    else if (i == 2)
+    {
         return this->completedOrders;
     }
+}
+
+void WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector)
+{
+    // move the orders between orders vectors
+    for (int i = 0; i < fromVector.size(); ++i)
+    {
+        if (fromVector[i]->getId() == orderId)
+        {
+            // Element found, move to "toVector" and remove from "fromVector"
+            toVector.push_back(std::move(fromVector[i]));
+            fromVector.erase(fromVector.begin() + i);
+            break;
+        }
+    }
+}
+
+const vector<Volunteer *> &WareHouse::getVolunteers()
+{
+    return this->volunteers;
 }
