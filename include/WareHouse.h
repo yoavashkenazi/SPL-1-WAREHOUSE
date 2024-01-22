@@ -31,7 +31,9 @@ public:
     int getOrderCounter() const;
     bool customerExist(int id) const;
     bool volunteerExist(int id) const;
-    const vector<Order *> &getOrders(int i) const; //returns the Orders vector
+    const vector<Order *> &getOrders(int i); // returns the Orders vector
+    void moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector);
+    const vector<Volunteer *> &getVolunteers(); // returns the Volunteers vector
 
 private:
     bool isOpen;

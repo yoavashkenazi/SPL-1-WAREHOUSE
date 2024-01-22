@@ -67,6 +67,7 @@ void CollectorVolunteer ::acceptOrder(const Order &order)
 {
     // assumes that the volunteer can take order
     this->activeOrderId = order.getId();
+    this->completedOrderId = NO_ORDER;
     this->timeLeft = this->coolDown;
 }
 string CollectorVolunteer ::toString() const
@@ -174,6 +175,7 @@ void DriverVolunteer::acceptOrder(const Order &order) //
 {
     // assumes that the volunteer can take order
     this->activeOrderId = order.getId();
+    this->completedOrderId = NO_ORDER;
     this->distanceLeft = order.getDistance();
 }
 void DriverVolunteer::step() // Decrease distanceLeft by distancePerStep
