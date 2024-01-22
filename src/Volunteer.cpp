@@ -32,7 +32,7 @@ CollectorVolunteer ::CollectorVolunteer(int id, const string &name, int coolDown
 }
 CollectorVolunteer *CollectorVolunteer ::clone() const
 {
-    return new CollectorVolunteer(getId(), getName(), getCoolDown());
+    return new CollectorVolunteer(*this);
 }
 void CollectorVolunteer ::step()
 {
@@ -95,7 +95,7 @@ LimitedCollectorVolunteer ::LimitedCollectorVolunteer(int id, const string &name
 }
 LimitedCollectorVolunteer *LimitedCollectorVolunteer::clone() const
 {
-    return new LimitedCollectorVolunteer(this->getId(), this->getName(), this->getCoolDown(), this->getMaxOrders());
+    return new LimitedCollectorVolunteer(*this);
 }
 bool LimitedCollectorVolunteer::hasOrdersLeft() const
 {
@@ -143,7 +143,7 @@ string LimitedCollectorVolunteer::toString() const
 DriverVolunteer::DriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
 DriverVolunteer *DriverVolunteer::clone() const
 {
-    return new DriverVolunteer(this->getId(), this->getName(), this->getMaxDistance(), this->getDistancePerStep());
+    return new DriverVolunteer(*this);
 }
 int DriverVolunteer::getDistanceLeft() const
 {
@@ -208,7 +208,7 @@ string DriverVolunteer::toString() const
 LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders), ordersLeft(maxOrders) {}
 LimitedDriverVolunteer *LimitedDriverVolunteer ::clone() const
 {
-    return new LimitedDriverVolunteer(this->getId(), this->getName(), this->getMaxDistance(), this->getDistancePerStep(), this->getMaxOrders());
+    return new LimitedDriverVolunteer(*this);
 }
 int LimitedDriverVolunteer ::getMaxOrders() const
 {
