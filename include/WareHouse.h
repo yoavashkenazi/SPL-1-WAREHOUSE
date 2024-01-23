@@ -16,6 +16,7 @@ class WareHouse
 
 public:
     WareHouse(const string &configFilePath);
+    WareHouse(const WareHouse &other);
     ~WareHouse();
     void start();
     const vector<BaseAction *> &getActions() const;
