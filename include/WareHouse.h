@@ -34,7 +34,7 @@ public:
     bool customerExist(int id) const;
     bool volunteerExist(int id) const;
     const vector<Order *> &getOrders(int i); // returns the Orders vector
-    bool moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector);
+    bool moveOrderBetweenVectors(int orderId, vector<Order *> &fromVector, vector<Order *> &toVector);
     const vector<Volunteer *> &getVolunteers(); // returns the Volunteers vector
     bool deleteLimitedVolunteer(int id);
 

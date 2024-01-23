@@ -406,7 +406,7 @@ const vector<Order *> &WareHouse::getOrders(int i)
     }
 }
 
-bool WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> fromVector, vector<Order *> toVector)
+bool WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> &fromVector, vector<Order *> &toVector)
 {
     // move the orders between orders vectors
     for (int i = 0; i < fromVector.size(); ++i)
