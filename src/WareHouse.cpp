@@ -438,7 +438,6 @@ bool WareHouse::deleteLimitedVolunteer(int id)
             delete volunteers[i];
             // delete the pointer from the vector
             this->volunteers.erase(this->volunteers.begin() + i);
-            this->volunteerCounter--;
             return true;
         }
     }
