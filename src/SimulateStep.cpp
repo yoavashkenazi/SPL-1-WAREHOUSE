@@ -11,33 +11,24 @@ void SimulateStep::act(WareHouse &wareHouse)
     {
         // part 1 - assigning pending orders to volunteers
         vector<Order *> pendingOrdersVector = wareHouse.getOrders(0);
-<<<<<<< HEAD
-        for (Order* o : pendingOrdersVector){//each order in pendingOrders
-            if (o->getStatus() == OrderStatus::PENDING){ //if the order status is PENDING, hand it to collector
-=======
         for (Order *o : pendingOrdersVector)
         { // each order in pendingOrders
             if (o->getStatus() == OrderStatus::PENDING)
-            { // if the order status is pending, hand it to collector
->>>>>>> yoav-br
+            { // if the order status is PENDING, hand it to collector
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
                 { // searching for an available collector
                     if ((CollectorVolunteer *collector = dynamic_cast<CollectorVolunteer *>(v)) && (v->canTakeOrder(*o)))
                     {
                         v->acceptOrder(*o);
-                        wareHouse.moveOrderBetweenVectors(o->getId(),wareHouse.getOrders(0),wareHouse.getOrders(1));
+                        wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(0), wareHouse.getOrders(1));
                         o->setCollectorId(v->getId());
                         o->setStatus(OrderStatus::COLLECTING);
                     }
                 }
             }
-<<<<<<< HEAD
-            else{//if the order status is COLLECTING, hand it to a Driver
-=======
             else
-            { // if the order status is collecting, hand it to a Driver
->>>>>>> yoav-br
+            { // if the order status is COLLECTING, hand it to a Driver
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
                 { // searching for an available driver
@@ -80,7 +71,7 @@ void SimulateStep::act(WareHouse &wareHouse)
         // part 4 - deleting each limited volunteer that reached his maxOrders
         for (Volunteer *v : volunteerVector)
         {
-            if (!(v->hasOrdersLeft()) && v->getActiveOrderId() == NO_ORDER)
+            if (!(v->hasOrdersLeft) && v->getActiveOrderId() == NO_ORDER)
             {
                 wareHouse.deleteLimitedVolunteer(v->getId());
             }
