@@ -390,7 +390,7 @@ int WareHouse::CountWords(const std::string &input)
     return wordCount;
 }
 
-const vector<Order *> &WareHouse::getOrders(int i)
+vector<Order *> &WareHouse::getOrders(int i)
 { // returns the Orders vector
     if (i == 0)
     {

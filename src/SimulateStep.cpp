@@ -71,11 +71,7 @@ void SimulateStep::act(WareHouse &wareHouse)
         // part 4 - deleting each limited volunteer that reached his maxOrders
         for (Volunteer *v : volunteerVector)
         {
-<<<<<<< HEAD
             if ((!(v->hasOrdersLeft())) && v->getActiveOrderId() == NO_ORDER)
-=======
-            if (!(v->hasOrdersLeft) && v->getActiveOrderId() == NO_ORDER)
->>>>>>> 64e89603a9631c767782911661c2c2f184fc3e3c
             {
                 wareHouse.deleteLimitedVolunteer(v->getId());
             }
