@@ -18,7 +18,7 @@ void SimulateStep::act(WareHouse &wareHouse)
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
                 { // searching for an available collector
-                    if ((CollectorVolunteer *collector = dynamic_cast<CollectorVolunteer *>(v)) && (v->canTakeOrder(*o)))
+                    if ((v->getVolunteerType()==0 | v->getVolunteerType()==1 ) && (v->canTakeOrder(*o)))//if the volunteer is a collector and available.
                     {
                         v->acceptOrder(*o);
                         wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(0), wareHouse.getOrders(1));
@@ -32,7 +32,7 @@ void SimulateStep::act(WareHouse &wareHouse)
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
                 { // searching for an available driver
-                    if ((DriverVolunteer *driver = dynamic_cast<DriverVolunteer *>(v)) && (v->canTakeOrder(*o)))
+                    if ((v->getVolunteerType()==2 | v->getVolunteerType()==3 ) && (v->canTakeOrder(*o)))//if the volunteer is a driver and available.
                     {
                         v->acceptOrder(*o);
                         wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(0), wareHouse.getOrders(1));
@@ -59,11 +59,11 @@ void SimulateStep::act(WareHouse &wareHouse)
             { // if the order proccessing is completed
                 if (o->getStatus() == OrderStatus::COLLECTING)
                 {
-                    wareHouse.moveOrderBetweenVectors(o->getId()); // move from inProcces to Pending
+                    wareHouse.moveOrderBetweenVectors(o->getId(),wareHouse.getOrders(1),wareHouse.getOrders(0)); // move from inProcces to Pending
                 }
                 else
                 {
-                    wareHouse.moveOrderBetweenVectors(o->getId()); // move from inProccess to Completed
+                    wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(1), wareHouse.getOrders(2)); // move from inProccess to Completed
                     o->setStatus(OrderStatus::COMPLETED);
                 }
             }
@@ -71,7 +71,7 @@ void SimulateStep::act(WareHouse &wareHouse)
         // part 4 - deleting each limited volunteer that reached his maxOrders
         for (Volunteer *v : volunteerVector)
         {
-            if (!(v->hasOrdersLeft) && v->getActiveOrderId() == NO_ORDER)
+            if (!(v->hasOrdersLeft()) && v->getActiveOrderId() == NO_ORDER)
             {
                 wareHouse.deleteLimitedVolunteer(v->getId());
             }

@@ -90,6 +90,9 @@ string CollectorVolunteer ::toString() const
         << "\n";
     return oss.str();
 }
+int CollectorVolunteer::getVolunteerType() const{
+    return 0;
+}
 
 LimitedCollectorVolunteer ::LimitedCollectorVolunteer(int id, const string &name, int coolDown, int maxOrders) : CollectorVolunteer(id, name, coolDown), maxOrders(maxOrders), ordersLeft(maxOrders)
 {
@@ -139,6 +142,9 @@ string LimitedCollectorVolunteer::toString() const
         << "TimeLeft: " << timeLeftStr << "\n"
         << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
+}
+int LimitedCollectorVolunteer::getVolunteerType() const{
+    return 1;
 }
 
 DriverVolunteer::DriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
@@ -206,6 +212,9 @@ string DriverVolunteer::toString() const
         << "\n";
     return oss.str();
 }
+int DriverVolunteer::getVolunteerType() const{
+    return 2;
+}
 
 LimitedDriverVolunteer ::LimitedDriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep, int maxOrders) : DriverVolunteer(id, name, maxDistance, distancePerStep), maxOrders(maxOrders), ordersLeft(maxOrders) {}
 LimitedDriverVolunteer *LimitedDriverVolunteer ::clone() const
@@ -252,4 +261,7 @@ string LimitedDriverVolunteer ::toString() const
         << "DistanceLeft: " << distanceLeftStr << "\n"
         << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
+}
+int LimitedDriverVolunteer::getVolunteerType() const{
+    return 3;
 }
