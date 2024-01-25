@@ -17,7 +17,10 @@ class WareHouse
 public:
     WareHouse(const string &configFilePath);
     WareHouse(const WareHouse &other);
+    WareHouse(const WareHouse &&other) noexcept;
     ~WareHouse();
+    WareHouse &operator=(const WareHouse &other);
+    WareHouse &operator=(const WareHouse &&other) noexcept;
     void start();
     const vector<BaseAction *> &getActions() const;
     void addOrder(Order *order);
@@ -53,4 +56,5 @@ private:
     void InputToAction(string input);
     void ConfigLineProccessing(string input);
     int CountWords(const std::string &input);
+    void clearWarehouse();
 };

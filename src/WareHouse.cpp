@@ -39,37 +39,107 @@ WareHouse::WareHouse(const WareHouse &other) : isOpen(other.isOpen), customerCou
     }
 }
 
+WareHouse::WareHouse(const WareHouse &&other) noexcept : isOpen(other.isOpen), customerCounter(other.customerCounter), volunteerCounter(other.volunteerCounter), orderCounter(other.orderCounter)
+{
+    for (const BaseAction *originalAction : other.actionsLog)
+    {
+        this->actionsLog.push_back(originalAction->clone());
+    }
+    for (const Volunteer *originalVolunteer : other.volunteers)
+    {
+        this->volunteers.push_back(originalVolunteer->clone());
+    }
+    for (const Order *originalOrder : other.pendingOrders)
+    {
+        this->pendingOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Order *originalOrder : other.inProcessOrders)
+    {
+        this->inProcessOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Order *originalOrder : other.completedOrders)
+    {
+        this->completedOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Customer *originalCustomer : other.customers)
+    {
+        this->customers.push_back(originalCustomer->clone());
+    }
+}
+
 WareHouse::~WareHouse()
 {
-    for (const BaseAction *action : this->actionsLog)
+    this->clearWarehouse();
+}
+WareHouse &WareHouse::operator=(const WareHouse &other)
+{
+    if (&other != this)
     {
-        delete action;
-        action = nullptr;
+        // delete all the values in all vectors first
+        this->clearWarehouse();
+
+        this->isOpen = other.isOpen;
+        this->customerCounter = other.customerCounter;
+        this->volunteerCounter = other.volunteerCounter;
+        this->orderCounter = other.orderCounter;
+        for (const BaseAction *originalAction : other.actionsLog)
+        {
+            this->actionsLog.push_back(originalAction->clone());
+        }
+        for (const Volunteer *originalVolunteer : other.volunteers)
+        {
+            this->volunteers.push_back(originalVolunteer->clone());
+        }
+        for (const Order *originalOrder : other.pendingOrders)
+        {
+            this->pendingOrders.push_back(new Order(*originalOrder));
+        }
+        for (const Order *originalOrder : other.inProcessOrders)
+        {
+            this->inProcessOrders.push_back(new Order(*originalOrder));
+        }
+        for (const Order *originalOrder : other.completedOrders)
+        {
+            this->completedOrders.push_back(new Order(*originalOrder));
+        }
+        for (const Customer *originalCustomer : other.customers)
+        {
+            this->customers.push_back(originalCustomer->clone());
+        }
     }
-    for (const Volunteer *volunteer : this->volunteers)
+}
+WareHouse &WareHouse::operator=(const WareHouse &&other) noexcept
+{
+    // delete all the values in all vectors first
+    this->clearWarehouse();
+
+    this->isOpen = other.isOpen;
+    this->customerCounter = other.customerCounter;
+    this->volunteerCounter = other.volunteerCounter;
+    this->orderCounter = other.orderCounter;
+    for (const BaseAction *originalAction : other.actionsLog)
     {
-        delete volunteer;
-        volunteer = nullptr;
+        this->actionsLog.push_back(originalAction->clone());
     }
-    for (const Order *order : this->pendingOrders)
+    for (const Volunteer *originalVolunteer : other.volunteers)
     {
-        delete order;
-        order = nullptr;
+        this->volunteers.push_back(originalVolunteer->clone());
     }
-    for (const Order *order : this->inProcessOrders)
+    for (const Order *originalOrder : other.pendingOrders)
     {
-        delete order;
-        order = nullptr;
+        this->pendingOrders.push_back(new Order(*originalOrder));
     }
-    for (const Order *order : this->completedOrders)
+    for (const Order *originalOrder : other.inProcessOrders)
     {
-        delete order;
-        order = nullptr;
+        this->inProcessOrders.push_back(new Order(*originalOrder));
     }
-    for (const Customer *customer : this->customers)
+    for (const Order *originalOrder : other.completedOrders)
     {
-        delete customer;
-        customer = nullptr;
+        this->completedOrders.push_back(new Order(*originalOrder));
+    }
+    for (const Customer *originalCustomer : other.customers)
+    {
+        this->customers.push_back(originalCustomer->clone());
     }
 }
 
@@ -86,7 +156,6 @@ void WareHouse::start()
         this->InputToAction(input);
     }
 }
-
 const vector<BaseAction *> &WareHouse::getActions() const
 {
     return this->actionsLog;
@@ -145,23 +214,19 @@ Order &WareHouse ::getOrder(int orderId) const
         }
     }
 }
-
 void WareHouse::close()
 {
     this->isOpen = false;
 }
-
 void WareHouse::open()
 {
     this->isOpen = true;
 }
-
 void WareHouse::addCustomer(Customer *customer)
 {
     customers.push_back(customer);
     this->customerCounter = this->customerCounter + 1;
 }
-
 void WareHouse::configFileProccessing(const string &configFilePath)
 {
     // Open the text file
@@ -203,7 +268,6 @@ void WareHouse::configFileProccessing(const string &configFilePath)
     // Close the file
     inputFile.close();
 }
-
 int WareHouse::getCustomerCounter() const
 {
     return this->customerCounter;
@@ -216,12 +280,10 @@ int WareHouse::getOrderCounter() const
 {
     return this->orderCounter;
 }
-
 bool WareHouse::customerExist(int id) const
 {
     return id < this->customerCounter;
 }
-
 bool WareHouse::volunteerExist(int id) const
 {
     for (Volunteer *v : this->volunteers)
@@ -233,7 +295,6 @@ bool WareHouse::volunteerExist(int id) const
     }
     return false;
 }
-
 void WareHouse::InputToAction(string input)
 {
     std::istringstream iss(input);
@@ -317,7 +378,6 @@ void WareHouse::InputToAction(string input)
         cout << "The Program did nothing, check the input or the code :)" << endl;
     }
 }
-
 void WareHouse::ConfigLineProccessing(string input)
 {
     std::istringstream iss(input);
@@ -375,7 +435,6 @@ void WareHouse::ConfigLineProccessing(string input)
         this->volunteerCounter++;
     }
 }
-
 int WareHouse::CountWords(const std::string &input)
 { // counts the number of words in input
     std::istringstream iss(input);
@@ -389,7 +448,6 @@ int WareHouse::CountWords(const std::string &input)
 
     return wordCount;
 }
-
 vector<Order *> &WareHouse::getOrders(int i)
 { // returns the Orders vector
     if (i == 0)
@@ -405,7 +463,6 @@ vector<Order *> &WareHouse::getOrders(int i)
         return this->completedOrders;
     }
 }
-
 bool WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> &fromVector, vector<Order *> &toVector)
 {
     // move the orders between orders vectors
@@ -421,15 +478,13 @@ bool WareHouse::moveOrderBetweenVectors(int orderId, vector<Order *> &fromVector
     }
     return false;
 }
-
 const vector<Volunteer *> &WareHouse::getVolunteers()
 {
     return this->volunteers;
 }
-
 bool WareHouse::deleteLimitedVolunteer(int id)
 {
-    // delete volunteer
+    // delete volunteer by id
     for (int i = 0; i < this->volunteers.size(); ++i)
     {
         if (volunteers[i]->getId() == id)
@@ -441,5 +496,40 @@ bool WareHouse::deleteLimitedVolunteer(int id)
             return true;
         }
     }
+    // return false if not found
     return false;
+}
+void WareHouse::clearWarehouse()
+{
+    // delete all the values in all vectors
+    for (const BaseAction *action : this->actionsLog)
+    {
+        delete action;
+        action = nullptr;
+    }
+    for (const Volunteer *volunteer : this->volunteers)
+    {
+        delete volunteer;
+        volunteer = nullptr;
+    }
+    for (const Order *order : this->pendingOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Order *order : this->inProcessOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Order *order : this->completedOrders)
+    {
+        delete order;
+        order = nullptr;
+    }
+    for (const Customer *customer : this->customers)
+    {
+        delete customer;
+        customer = nullptr;
+    }
 }
