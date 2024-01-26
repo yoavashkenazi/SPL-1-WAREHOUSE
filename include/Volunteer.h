@@ -10,6 +10,7 @@ using std::vector;
 class Volunteer {
     public:
         Volunteer(int id, const string &name);
+        virtual ~Volunteer() = default;
         int getId() const;
         const string &getName() const;
         int getActiveOrderId() const;
