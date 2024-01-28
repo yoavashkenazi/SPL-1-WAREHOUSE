@@ -1,21 +1,24 @@
 #include "../include/Action.h"
 #include <iostream>
 
+BaseAction::BaseAction() : errorMsg(""), status(ActionStatus::ERROR) {}
 
-BaseAction::BaseAction(): errorMsg(""), status(ActionStatus::ERROR){}
-
-ActionStatus BaseAction::getStatus() const{
+ActionStatus BaseAction::getStatus() const
+{
     return status;
 }
-void BaseAction::complete(){
+void BaseAction::complete()
+{
     status = ActionStatus::COMPLETED;
 }
-void BaseAction::error(string errorMsg){
+void BaseAction::error(string errorMsg)
+{
     status = ActionStatus::ERROR;
     this->errorMsg = errorMsg;
-    cout << "ERROR: "+ errorMsg << endl; 
+    cout << "Error: " + errorMsg << endl;
 }
-string BaseAction::getErrorMsg() const{
+string BaseAction::getErrorMsg() const
+{
     string output = BaseAction::errorMsg;
     return output;
 }
