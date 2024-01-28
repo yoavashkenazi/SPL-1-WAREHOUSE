@@ -507,29 +507,35 @@ void WareHouse::clearWarehouse()
         delete action;
         action = nullptr;
     }
+    this->actionsLog.clear();
     for (const Volunteer *volunteer : this->volunteers)
     {
         delete volunteer;
         volunteer = nullptr;
     }
+    this->volunteers.clear();
     for (const Order *order : this->pendingOrders)
     {
         delete order;
         order = nullptr;
     }
+    this->pendingOrders.clear();
     for (const Order *order : this->inProcessOrders)
     {
         delete order;
         order = nullptr;
     }
+    this->inProcessOrders.clear();
     for (const Order *order : this->completedOrders)
     {
         delete order;
         order = nullptr;
     }
+    this->completedOrders.clear();
     for (const Customer *customer : this->customers)
     {
         delete customer;
         customer = nullptr;
     }
+    this->customers.clear();
 }
