@@ -1,8 +1,4 @@
-
 all: clean compile link
-
-valgrind: compile
-	valgrind --leak-check=full --show-reachable=yes ./bin/hello ./configFile.txt
 
 link:
 	g++ -o bin/hello bin/main.o bin/WareHouse.o bin/AddOrder.o bin/Volunteer.o bin/Order.o bin/Customer.o bin/PrintCustomerStatus.o bin/PrintOrderStatus.o bin/SimulateStep.o bin/BaseAction.o bin/PrintVolunteerStatus.o bin/AddCustomer.o bin/PrintActionsLog.o bin/Close.o bin/BackupWareHouse.o bin/RestoreWareHouse.o
