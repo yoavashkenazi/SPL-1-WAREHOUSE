@@ -17,13 +17,14 @@ void SimulateStep::act(WareHouse &wareHouse)
             { // if the order status is PENDING, hand it to collector
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
-                { // searching for an available collector
-                    if ((v->getVolunteerType()==0 | v->getVolunteerType()==1 ) && (v->canTakeOrder(*o)))//if the volunteer is a collector and available.
+                {                                                                                            // searching for an available collector
+                    if ((v->getVolunteerType() == 0 || v->getVolunteerType() == 1) && (v->canTakeOrder(*o))) // if the volunteer is a collector and available.
                     {
                         v->acceptOrder(*o);
                         wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(0), wareHouse.getOrders(1));
                         o->setCollectorId(v->getId());
                         o->setStatus(OrderStatus::COLLECTING);
+                        break; // break because volunteer is associated
                     }
                 }
             }
@@ -31,13 +32,14 @@ void SimulateStep::act(WareHouse &wareHouse)
             { // if the order status is COLLECTING, hand it to a Driver
                 vector<Volunteer *> volunteerVector = wareHouse.getVolunteers();
                 for (Volunteer *v : volunteerVector)
-                { // searching for an available driver
-                    if ((v->getVolunteerType()==2 | v->getVolunteerType()==3 ) && (v->canTakeOrder(*o)))//if the volunteer is a driver and available.
+                {                                                                                            // searching for an available driver
+                    if ((v->getVolunteerType() == 2 || v->getVolunteerType() == 3) && (v->canTakeOrder(*o))) // if the volunteer is a driver and available.
                     {
                         v->acceptOrder(*o);
                         wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(0), wareHouse.getOrders(1));
                         o->setDriverId(v->getId());
                         o->setStatus(OrderStatus::DELIVERING);
+                        break; // break because driver is associated
                     }
                 }
             }
@@ -53,21 +55,31 @@ void SimulateStep::act(WareHouse &wareHouse)
         }
         // part 3 - checking each inProccess order if it was completed and moving it to pending/completed
         vector<Order *> inProccessOrdersVector = wareHouse.getOrders(1);
+        // vectors of order ids which will move to other vectors in warehouse
+        vector<int> toPending;
+        vector<int> toCompleted;
         for (Order *o : inProccessOrdersVector)
         {
-            if ((wareHouse.getVolunteer(o->getCollectorId())).getCompletedOrderId() != NO_ORDER)
-            { // if the order proccessing is completed
-                if (o->getStatus() == OrderStatus::COLLECTING)
-                {
-                    wareHouse.moveOrderBetweenVectors(o->getId(),wareHouse.getOrders(1),wareHouse.getOrders(0)); // move from inProcces to Pending
-                }
-                else
-                {
-                    wareHouse.moveOrderBetweenVectors(o->getId(), wareHouse.getOrders(1), wareHouse.getOrders(2)); // move from inProccess to Completed
-                    o->setStatus(OrderStatus::COMPLETED);
-                }
+            if (o->getStatus() == OrderStatus::DELIVERING && (wareHouse.getVolunteer(o->getDriverId())).getCompletedOrderId() != NO_ORDER)
+            {
+                toCompleted.push_back(o->getId());
+                o->setStatus(OrderStatus::COMPLETED);
+            }
+            else if (o->getStatus() == OrderStatus::COLLECTING && (wareHouse.getVolunteer(o->getCollectorId())).getCompletedOrderId() != NO_ORDER)
+            {
+                toPending.push_back(o->getId());
             }
         }
+
+        for (int id : toPending)
+        {
+            wareHouse.moveOrderBetweenVectors(id, wareHouse.getOrders(1), wareHouse.getOrders(0)); // move from inProcces to Pending
+        }
+        for (int id : toCompleted)
+        {
+            wareHouse.moveOrderBetweenVectors(id, wareHouse.getOrders(1), wareHouse.getOrders(2)); // move from inProccess to Completed
+        }
+
         // part 4 - deleting each limited volunteer that reached his maxOrders
         for (Volunteer *v : volunteerVector)
         {
