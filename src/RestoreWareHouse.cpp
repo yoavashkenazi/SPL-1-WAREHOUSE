@@ -3,28 +3,27 @@
 #include "../include/Customer.h"
 #include <iostream>
 #include <string>
-extern WareHouse* backup;
+extern WareHouse *backup;
 
-
-RestoreWareHouse::RestoreWareHouse(): BaseAction(){}
-void RestoreWareHouse::act(WareHouse &wareHouse) {
-    if(backup==nullptr){
+RestoreWareHouse::RestoreWareHouse() : BaseAction() {}
+void RestoreWareHouse::act(WareHouse &wareHouse)
+{
+    if (backup == nullptr)
+    {
         this->error("No backup available");
     }
-    else{
+    else
+    {
         wareHouse = *backup;
         this->complete();
     }
 }
-RestoreWareHouse *RestoreWareHouse::clone() const {
-    RestoreWareHouse *cloneRestoreWareHouse = new RestoreWareHouse();
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        cloneRestoreWareHouse->complete();
-    }
-    return cloneRestoreWareHouse;
+RestoreWareHouse *RestoreWareHouse::clone() const
+{
+    return new RestoreWareHouse(*this);
 }
-string RestoreWareHouse::toString() const {
+string RestoreWareHouse::toString() const
+{
     string output;
     output = "restore COMPLETED";
     return output;

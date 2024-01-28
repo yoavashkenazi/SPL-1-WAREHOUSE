@@ -35,14 +35,5 @@ string PrintOrderStatus::toString() const
 
 PrintOrderStatus *PrintOrderStatus::clone() const
 {
-    PrintOrderStatus *clonePrintOrderStatus = new PrintOrderStatus(orderId);
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        clonePrintOrderStatus->complete();
-    }
-    else
-    {
-        clonePrintOrderStatus->error(this->getErrorMsg());
-    }
-    return clonePrintOrderStatus;
+    return new PrintOrderStatus(*this);
 }

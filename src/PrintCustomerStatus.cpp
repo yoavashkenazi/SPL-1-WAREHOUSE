@@ -60,14 +60,5 @@ string PrintCustomerStatus::toString() const
 
 PrintCustomerStatus *PrintCustomerStatus::clone() const
 {
-    PrintCustomerStatus *clonePrintCustomerStatus = new PrintCustomerStatus(customerId);
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        clonePrintCustomerStatus->complete();
-    }
-    else
-    {
-        clonePrintCustomerStatus->error(this->getErrorMsg());
-    }
-    return clonePrintCustomerStatus;
+    return new PrintCustomerStatus(*this);
 }

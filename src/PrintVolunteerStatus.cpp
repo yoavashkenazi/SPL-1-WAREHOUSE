@@ -37,14 +37,5 @@ string PrintVolunteerStatus::toString() const
 
 PrintVolunteerStatus *PrintVolunteerStatus::clone() const
 {
-    PrintVolunteerStatus *clonePrintVolunteerStatus = new PrintVolunteerStatus(volunteerId);
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        clonePrintVolunteerStatus->complete();
-    }
-    else
-    {
-        clonePrintVolunteerStatus->error(this->getErrorMsg());
-    }
-    return clonePrintVolunteerStatus;
+    return new PrintVolunteerStatus(*this);
 }

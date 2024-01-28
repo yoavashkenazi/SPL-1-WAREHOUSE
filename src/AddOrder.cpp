@@ -37,14 +37,5 @@ string AddOrder::toString() const
 
 AddOrder *AddOrder::clone() const
 {
-    AddOrder *cloneAddOrder = new AddOrder(customerId);
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        cloneAddOrder->complete();
-    }
-    else
-    {
-        cloneAddOrder->error(this->getErrorMsg());
-    }
-    return cloneAddOrder;
+    return new AddOrder(*this);
 }

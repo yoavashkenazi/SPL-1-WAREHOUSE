@@ -25,7 +25,6 @@ Close::Close() : BaseAction() {}
 void Close::act(WareHouse &wareHouse)
 {
     vector<Order *> pendingOrderVector = wareHouse.getOrders(0);
-    cout << " \n XXXXXXXXXXX \n";
     for (Order *o : pendingOrderVector)
     {
         cout << "OrderID: " + std::to_string(o->getId()) + " , CustomerID: " + std::to_string(o->getCustomerId()) + " , OrderStatus: " + Close::orderStatusToString(o->getStatus()) << endl;
@@ -46,12 +45,7 @@ void Close::act(WareHouse &wareHouse)
 }
 Close *Close::clone() const
 {
-    Close *cloneClose = new Close();
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        cloneClose->complete();
-    }
-    return cloneClose;
+    return new Close(*this);
 }
 string Close::toString() const
 {
