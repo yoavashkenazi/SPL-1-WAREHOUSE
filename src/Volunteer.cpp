@@ -90,7 +90,8 @@ string CollectorVolunteer ::toString() const
         << "\n";
     return oss.str();
 }
-int CollectorVolunteer::getVolunteerType() const{
+int CollectorVolunteer::getVolunteerType() const
+{
     return 0;
 }
 
@@ -143,11 +144,12 @@ string LimitedCollectorVolunteer::toString() const
         << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
 }
-int LimitedCollectorVolunteer::getVolunteerType() const{
+int LimitedCollectorVolunteer::getVolunteerType() const
+{
     return 1;
 }
 
-DriverVolunteer::DriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep) {}
+DriverVolunteer::DriverVolunteer(int id, const string &name, int maxDistance, int distancePerStep) : Volunteer(id, name), maxDistance(maxDistance), distancePerStep(distancePerStep), distanceLeft(0) {}
 DriverVolunteer *DriverVolunteer::clone() const
 {
     return new DriverVolunteer(*this);
@@ -212,7 +214,8 @@ string DriverVolunteer::toString() const
         << "\n";
     return oss.str();
 }
-int DriverVolunteer::getVolunteerType() const{
+int DriverVolunteer::getVolunteerType() const
+{
     return 2;
 }
 
@@ -235,7 +238,7 @@ bool LimitedDriverVolunteer ::hasOrdersLeft() const
 }
 bool LimitedDriverVolunteer ::canTakeOrder(const Order &order) const // Signal if the volunteer is not busy, the order is within the maxDistance and have orders left
 {
-    (!isBusy() && order.getDistance() <= this->getMaxDistance() && hasOrdersLeft());
+    return (!isBusy() && order.getDistance() <= this->getMaxDistance() && hasOrdersLeft());
 }
 void LimitedDriverVolunteer ::acceptOrder(const Order &order) // Assign distanceLeft to order's distance and decrease ordersLeft
 {
@@ -262,6 +265,7 @@ string LimitedDriverVolunteer ::toString() const
         << "OrdersLeft: " << std::to_string(this->getNumOrdersLeft()) << "\n";
     return oss.str();
 }
-int LimitedDriverVolunteer::getVolunteerType() const{
+int LimitedDriverVolunteer::getVolunteerType() const
+{
     return 3;
 }

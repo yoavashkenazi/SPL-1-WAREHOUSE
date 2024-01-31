@@ -49,8 +49,11 @@ const string Order::toString() const
         statusStr = "Collecting";
         break;
     case OrderStatus::DELIVERING:
-         statusStr = "Delivering";
-         break;
+        statusStr = "Delivering";
+        break;
+    case OrderStatus::COMPLETED:
+        statusStr = "Completed";
+        break;
     }
 
     string collectorIdStr = "None";
@@ -69,7 +72,7 @@ const string Order::toString() const
         << "OrderStatus: " << statusStr << "\n"
         << "CustomerID: " << std::to_string(this->getCustomerId()) << "\n"
         << "Collector: " << collectorIdStr << "\n"
-        << "Driver: " << driverIdStr <<"\n";
+        << "Driver: " << driverIdStr << "\n";
     return oss.str();
 }
 const int Order::getDistance() const

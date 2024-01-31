@@ -5,7 +5,7 @@
 
 // needed to be added: wareHouse.getOrderCounter(), wareHouse.CustomerExist(int id)
 
-AddOrder::AddOrder(int id) : customerId(id), BaseAction() {}
+AddOrder::AddOrder(int id) : BaseAction(), customerId(id) {}
 
 void AddOrder::act(WareHouse &wareHouse)
 {

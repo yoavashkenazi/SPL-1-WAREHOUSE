@@ -36,7 +36,10 @@ public:
     int getOrderCounter() const;
     bool customerExist(int id) const;
     bool volunteerExist(int id) const;
-    vector<Order *> &getOrders(int i); // returns the Orders vector
+    vector<Order *> &getPendingOrders();   // returns the Pending Orders vector
+    vector<Order *> &getInProcessOrders(); // returns the in process Orders vector
+    vector<Order *> &getCompletedOrders(); // returns the in completed Orders vector
+
     bool moveOrderBetweenVectors(int orderId, vector<Order *> &fromVector, vector<Order *> &toVector);
     const vector<Volunteer *> &getVolunteers(); // returns the Volunteers vector
     bool deleteLimitedVolunteer(int id);
@@ -55,6 +58,8 @@ private:
     int orderCounter; // ** for assigning unique order IDs
     void InputToAction(string input);
     void ConfigLineProccessing(string input);
-    int CountWords(const std::string &input);
     void clearWarehouse();
+    Volunteer *fakeVolunteer;
+    Order *fakeOrder;
+    Customer *fakeCustomer;
 };

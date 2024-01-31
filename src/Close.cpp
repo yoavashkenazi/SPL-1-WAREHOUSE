@@ -24,17 +24,17 @@ string Close::orderStatusToString(OrderStatus status)
 Close::Close() : BaseAction() {}
 void Close::act(WareHouse &wareHouse)
 {
-    vector<Order *> pendingOrderVector = wareHouse.getOrders(0);
+    vector<Order *> pendingOrderVector = wareHouse.getPendingOrders();
     for (Order *o : pendingOrderVector)
     {
         cout << "OrderID: " + std::to_string(o->getId()) + " , CustomerID: " + std::to_string(o->getCustomerId()) + " , OrderStatus: " + Close::orderStatusToString(o->getStatus()) << endl;
     }
-    vector<Order *> inProccessOrderVector = wareHouse.getOrders(1);
+    vector<Order *> inProccessOrderVector = wareHouse.getInProcessOrders();
     for (Order *o : inProccessOrderVector)
     {
         cout << "OrderID: " + std::to_string(o->getId()) + " , CustomerID: " + std::to_string(o->getCustomerId()) + " , OrderStatus: " + Close::orderStatusToString(o->getStatus()) << endl;
     }
-    vector<Order *> completedOrderVector = wareHouse.getOrders(2);
+    vector<Order *> completedOrderVector = wareHouse.getCompletedOrders();
     for (Order *o : completedOrderVector)
     {
         cout << "OrderID: " + std::to_string(o->getId()) + " , CustomerID: " + std::to_string(o->getCustomerId()) + " , OrderStatus: " + Close::orderStatusToString(o->getStatus()) << endl;
