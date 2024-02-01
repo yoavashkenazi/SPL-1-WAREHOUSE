@@ -99,7 +99,7 @@ void SimulateStep::act(WareHouse &wareHouse)
 std::string SimulateStep::toString() const
 {
     string output;
-    output = "step " + std::to_string(numOfSteps) + " COMPLETED";
+    output = "simulateStep " + std::to_string(numOfSteps) + " COMPLETED";
     return output;
 }
 SimulateStep *SimulateStep::clone() const
