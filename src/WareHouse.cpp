@@ -484,7 +484,7 @@ bool WareHouse::deleteLimitedVolunteer(int id)
     // delete volunteer by id
     for (std::vector<Volunteer *>::size_type i = 0; i < this->volunteers.size(); ++i)
     {
-        if (volunteers[i]->getId() == id)
+        if (volunteers[i] != nullptr && volunteers[i]->getId() == id)
         {
             // delete the volunteer
             delete volunteers[i];
@@ -501,45 +501,60 @@ void WareHouse::clearWarehouse()
     // delete all pointers
     for (const BaseAction *action : this->actionsLog)
     {
-        delete action;
+        if (action != nullptr)
+            delete action;
         action = nullptr;
     }
     this->actionsLog.clear();
     for (const Volunteer *volunteer : this->volunteers)
     {
-        delete volunteer;
+        if (volunteer != nullptr)
+            delete volunteer;
         volunteer = nullptr;
     }
     this->volunteers.clear();
     for (const Order *order : this->pendingOrders)
     {
-        delete order;
+        if (order != nullptr)
+            delete order;
         order = nullptr;
     }
     this->pendingOrders.clear();
     for (const Order *order : this->inProcessOrders)
     {
-        delete order;
+        if (order != nullptr)
+            delete order;
         order = nullptr;
     }
     this->inProcessOrders.clear();
     for (const Order *order : this->completedOrders)
     {
-        delete order;
+        if (order != nullptr)
+            delete order;
         order = nullptr;
     }
     this->completedOrders.clear();
     for (const Customer *customer : this->customers)
     {
-        delete customer;
+        if (customer != nullptr)
+            delete customer;
         customer = nullptr;
     }
     this->customers.clear();
 
-    delete this->fakeVolunteer;
-    this->fakeVolunteer = nullptr;
-    delete this->fakeOrder;
-    this->fakeOrder = nullptr;
-    delete this->fakeCustomer;
-    this->fakeCustomer = nullptr;
+    if (this->fakeVolunteer != nullptr)
+    {
+        delete this->fakeVolunteer;
+        this->fakeVolunteer = nullptr;
+    }
+    if (this->fakeOrder != nullptr)
+    {
+        delete this->fakeOrder;
+        this->fakeOrder = nullptr;
+    }
+    if (this->fakeCustomer != nullptr)
+    {
+        delete this->fakeCustomer;
+        this->fakeCustomer = nullptr;
+    }
 }

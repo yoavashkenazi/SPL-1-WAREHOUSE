@@ -8,7 +8,8 @@ extern WareHouse *backup;
 BackupWareHouse::BackupWareHouse() : BaseAction() {}
 void BackupWareHouse::act(WareHouse &wareHouse)
 {
-    delete backup;
+    if (backup != nullptr)
+        delete backup;
     backup = new WareHouse(wareHouse);
     this->complete();
 }
