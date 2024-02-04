@@ -20,6 +20,13 @@ BackupWareHouse *BackupWareHouse::clone() const
 string BackupWareHouse::toString() const
 {
     string output;
-    output = "backup COMPLETED";
+    if (this->getStatus() == ActionStatus::COMPLETED)
+    {
+        output = "backup COMPLETED";
+    }
+    else
+    {
+        output = "backup ERROR";
+    }
     return output;
 }

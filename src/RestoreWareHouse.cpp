@@ -25,6 +25,13 @@ RestoreWareHouse *RestoreWareHouse::clone() const
 string RestoreWareHouse::toString() const
 {
     string output;
-    output = "restore COMPLETED";
+    if (this->getStatus() == ActionStatus::COMPLETED)
+    {
+        output = "restore COMPLETED";
+    }
+    else
+    {
+        output = "restore ERROR";
+    }
     return output;
 }
