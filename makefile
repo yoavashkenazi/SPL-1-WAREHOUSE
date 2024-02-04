@@ -22,4 +22,4 @@ compile:
 	g++ -g -Wall -Weffc++ -std=c++11 -Iinclude -c -o bin/RestoreWareHouse.o src/RestoreWareHouse.cpp
 
 clean:
-	rm -f bin/*.o
+	rm -f bin/warehouse bin/*.o
