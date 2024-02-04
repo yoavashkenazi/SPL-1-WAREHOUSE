@@ -1,2 +1,2 @@
 make
-valgrind --leak-check=yes ./bin/hello configFile.txt
+valgrind --leak-check=yes ./bin/warehouse configFile.txt
