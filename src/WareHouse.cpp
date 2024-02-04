@@ -160,7 +160,7 @@ void WareHouse::start()
     this->open();
     while (this->isOpen)
     {
-        cout << " \n Enter command: \n"
+        cout << "Enter command:"
              << endl;
         string input;
         std::getline(std::cin, input);
