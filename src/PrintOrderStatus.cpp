@@ -7,7 +7,7 @@ PrintOrderStatus::PrintOrderStatus(int id) : BaseAction(), orderId(id) {}
 
 void PrintOrderStatus::act(WareHouse &wareHouse)
 {
-    if (orderId > wareHouse.getOrderCounter())
+    if (orderId >= wareHouse.getOrderCounter())
     { // if the order doesnt exist (the id is higher than the counter)
         this->error("Order doesn't exist");
     }
