@@ -1,2 +1,2 @@
 make
-valgrind --leak-check=yes ./bin/warehouse configFile.txt
+valgrind --leak-check=full --show-reachable=yes ./bin/warehouse configFile.txt
