@@ -24,6 +24,7 @@ string Close::orderStatusToString(OrderStatus status)
 Close::Close() : BaseAction() {}
 void Close::act(WareHouse &wareHouse)
 {
+    //print all orders with their statuses.
     vector<Order *> pendingOrderVector = wareHouse.getPendingOrders();
     for (Order *o : pendingOrderVector)
     {

@@ -311,6 +311,9 @@ bool WareHouse::volunteerExist(int id) const
 }
 void WareHouse::InputToAction(string input)
 {
+    //parses each word out of the input given by the user.
+    //according to the first word of the input, it is possible to infer how many words the input contains, and the meaning of each word.
+    //the words than are used to create the appropriate action.
     std::istringstream iss(input);
     std::string firstWord;
     iss >> firstWord;
@@ -394,6 +397,9 @@ void WareHouse::InputToAction(string input)
 }
 void WareHouse::ConfigLineProccessing(string input)
 {
+    //parses each word out of the input given in the configFile.
+    //according to the first word of the input, it is possible to infer how many words the input contains, and the meaning of each word.
+    //the words than are used to create the appropriate object.
     std::istringstream iss(input);
     std::string firstWord;
     iss >> firstWord;

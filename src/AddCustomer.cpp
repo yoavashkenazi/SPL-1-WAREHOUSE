@@ -4,9 +4,8 @@
 #include <iostream>
 #include <string>
 
-// needed to be added: wareHouse.getCustomerCounter()
 
-CustomerType stringToCustomerType(string input)
+CustomerType stringToCustomerType(string input) //returns the CustomerType of input
 {
     if (input == "soldier")
     {
@@ -17,7 +16,7 @@ CustomerType stringToCustomerType(string input)
         return CustomerType::Civilian;
     }
 }
-string CustomerTypeToString(CustomerType input)
+string CustomerTypeToString(CustomerType input) //returns the string of input
 {
     if (input == CustomerType::Soldier)
     {

@@ -104,10 +104,5 @@ std::string SimulateStep::toString() const
 }
 SimulateStep *SimulateStep::clone() const
 {
-    SimulateStep *cloneSimulateStep = new SimulateStep(numOfSteps);
-    if (this->getStatus() == ActionStatus::COMPLETED)
-    {
-        cloneSimulateStep->complete();
-    }
-    return cloneSimulateStep;
+    return new SimulateStep(*this);
 }

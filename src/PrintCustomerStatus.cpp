@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+//returns the string of status
 string PrintCustomerStatus::orderStatusToString(OrderStatus status)
 {
     switch (status)

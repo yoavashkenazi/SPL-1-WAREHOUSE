@@ -3,13 +3,14 @@
 #include <iostream>
 #include <string>
 
-// needed to be added: wareHouse.getOrderCounter(), wareHouse.CustomerExist(int id)
+
 
 AddOrder::AddOrder(int id) : BaseAction(), customerId(id) {}
 
 void AddOrder::act(WareHouse &wareHouse)
 {
-    if (!wareHouse.customerExist(customerId) || !(wareHouse.getCustomer(customerId).canMakeOrder()))
+    //checks if the customer doesn`t exists or he exceeded his limit.
+    if (!wareHouse.customerExist(customerId) || !(wareHouse.getCustomer(customerId).canMakeOrder())) 
     {
         this->error("Cannot place this order");
     }
